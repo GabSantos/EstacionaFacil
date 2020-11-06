@@ -12,7 +12,7 @@ const fetchFonts = () => {
   })
 }
 
-export default function TelaLogin(props) {
+export default function Login(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [email, setEmail] = useState('')
   const [senha, setSenha] = useState('')
@@ -30,20 +30,23 @@ export default function TelaLogin(props) {
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
         <View style={styles.topv}>
-          <Text style={styles.estaciona}>
-            ESTACIONA
-                    </Text>
-          <Text style={styles.facil}>
-            FÁCIL
-          </Text>
+          <TouchableOpacity>
+            <Text style={styles.estaciona}>
+              ESTACIONA
+                      </Text>
+            <Text style={styles.facil}>
+              FÁCIL
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.botv}>
           <View style={styles.inputs}>
             <TextInput
               placeholder='E-mail'
               placeholderTextColor='#fbfbfb'
+              autoCompleteType='email'
               value={email}
-              onChange={email => setEmail(email)}
+              onChange={text => setEmail(text)}
               style={styles.inputText}
             />
           </View>
@@ -51,9 +54,11 @@ export default function TelaLogin(props) {
             <TextInput
               placeholder='Senha'
               placeholderTextColor='#fbfbfb'
+              secureTextEntry={true}
               value={senha}
-              onChange={senha => setSenha(senha)}
+              onChange={text => setSenha(text)}
               style={styles.inputText}
+              passwordRules={true}
             />
           </View>
           <TouchableOpacity
@@ -138,6 +143,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Modak',
     fontSize: 30,
     color: '#0085FF',
+    marginTop: 5
   }
 
 })

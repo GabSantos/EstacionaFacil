@@ -1,17 +1,19 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import TelaLogin from '../../pages/TelaLogin'
+import Login from '../../pages/Login'
+import Cadastro from '../../pages/Cadastro'
 
 const Stack = createStackNavigator()
 
 export default function StackFunc(props) {
   return (
-    <Stack.Navigator initialRouteName="Login"
+    <Stack.Navigator initialRouteName="Cadastro"
       screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login"
-        component={TelaLogin}>
-      </Stack.Screen>
+        component={Login}/>
+      <Stack.Screen name="Cadastro"
+        component={Cadastro}/>
     </Stack.Navigator>
   );
 }
