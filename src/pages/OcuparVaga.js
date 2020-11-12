@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
+import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
-import { Icon, InlineIcon } from '@iconify/react'
-import bxsUser from '@iconify/icons-bx/bxs-user'
 
 import vagaBg from '../../assets/vaga.png'
 import background from '../../assets/fundotelainicial.png'
-import Header from '../components/Header'
+import user from '../../assets/icons/user.png'
 
 const fetchFonts = () => {
   return loadAsync({
@@ -22,7 +20,7 @@ export default function Login(props) {
 
   if (!dataLoaded) {
     return (
-      <AppLoading
+      <AppLoading 
         startAsync={fetchFonts}
         onFinish={() => setDataLoaded(true)}
       />
@@ -30,13 +28,28 @@ export default function Login(props) {
   }
 
   return (
+    // Inicio View Geral container
     <View style={styles.container}>
+      {/* Inicio View principal */}
       <ImageBackground source={background} style={styles.bg}>
-        <Header>
-          <TouchableOpacity style={{color: '#ffd600', fontSize: '40px'}}>
-            <Icon icon={bxsUser} />
+        {/* Inicio da Header */}
+        <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.botoesHeader}
+            onPress={
+              () => {
+
+              }
+            }  
+          >
+            <ImageBackground source={user} style={styles.user} />
           </TouchableOpacity>
-        </Header>
+        </View>
+        {/* Fim da Header Inicio da Modal */}
+        <Modal>
+
+        </Modal>
+        {/* Fim da Modal inicio da Vaga */}
         <View style={styles.vaga}>
           <ImageBackground source={vagaBg} style={styles.bg}>
             <View style={styles.inputVaga}>
@@ -50,6 +63,7 @@ export default function Login(props) {
             </View>
           </ImageBackground>
         </View>
+        {/* Fim da Vaga inicio do Botao */}
         <TouchableOpacity
             style={styles.botao}
             onPress={
@@ -61,15 +75,18 @@ export default function Login(props) {
               Estacionar
             </Text>
           </TouchableOpacity>
+          {/* Fim do Botao */}
       </ImageBackground>
+      {/* Fim view principal */}
     </View>
+    // Fim View Geral container
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
+    width: '100vw',
+    height: '100vh',
     padding: 0,
     margin: 0,
   },
@@ -81,7 +98,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   vaga: {
-    marginTop: 120,
+    marginTop: 60,
     height: 360,
     width: 270,
     display: 'flex',
@@ -119,7 +136,7 @@ const styles = StyleSheet.create({
     width: 240,
     height: 50,
     borderRadius: 40,
-    marginTop: 90,
+    marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -135,6 +152,7 @@ const styles = StyleSheet.create({
     fontSize: 70,
     textAlign: 'center',
     fontFamily: 'Stardos',
+    color: '#fbfbfb',
   },
   inputVaga: {
     height: 100,
@@ -143,6 +161,29 @@ const styles = StyleSheet.create({
     borderBottomWidth: 10,
     justifyContent: 'center',
     margin: 20
+  },
+  user: {
+    height: '100%',
+    width: '100%',
+  },
+  header: {
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    zIndex: -1,
+    height: 60,
+    padding: 0,
+    margin: 0,
+    backgroundColor: '#0085FF',
+    borderBottomWidth: 4,
+    borderBottomColor: '#52ACFF',
+    justifyContent: 'center'
+  },
+  botoesHeader: {
+    height: 40,
+    width: 40,
+    marginLeft: 10,
+    marginRight: 15,
   },
 })
 
