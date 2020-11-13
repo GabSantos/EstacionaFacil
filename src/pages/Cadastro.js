@@ -46,7 +46,6 @@ export default function Cadstro(props) {
             <TextInput
               placeholder='Nome'
               placeholderTextColor='#fbfbfb'
-              value={nome}
               onChange={text => setNome(text)}
               style={styles.inputText}
             />
@@ -56,7 +55,6 @@ export default function Cadstro(props) {
               placeholder='E-mail'
               placeholderTextColor='#fbfbfb'
               autoCompleteType='email'
-              value={email}
               onChange={text => setEmail(text)}
               style={styles.inputText}
             />

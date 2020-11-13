@@ -5,6 +5,7 @@ import Login from '../../pages/Login'
 import Cadastro from '../../pages/Cadastro'
 import Inicial from '../../pages/Inicial'
 import CadastroFuncionario from '../../pages/CadastroFuncionario'
+import OcuparVaga from '../../pages/OcuparVaga'
 
 const Stack = createStackNavigator()
 
@@ -20,6 +21,8 @@ export default function StackFunc(props) {
         component={Inicial}/>
       <Stack.Screen name="CadastroFuncionario"
       component={CadastroFuncionario}/>
+      <Stack.Screen name="OcuparVaga"
+        component={OcuparVaga}/>  
     </Stack.Navigator>
   );
 }
