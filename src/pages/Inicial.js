@@ -1,5 +1,5 @@
-import React, { useState, Component } from 'react'
-import {Text, View, TextInput, Alert, Button,StyleSheet,ImageBackground, TouchableOpacity} from 'react-native'
+import React, { useState } from 'react'
+import {Text, View, StyleSheet,ImageBackground, TouchableOpacity} from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 import background from '../../assets/fundotelainicial.png'
@@ -11,10 +11,8 @@ const fetchFonts = () => {
   })
 }
 
-export default function App() {
+export default function App(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
   if (!dataLoaded) {
     return (
       <AppLoading
@@ -28,20 +26,19 @@ export default function App() {
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
         <View style={styles.topv}>
-          <TouchableOpacity>
             <Text style={styles.estaciona}>
               ESTACIONA
                       </Text>
             <Text style={styles.facil}>
               FÁCIL
             </Text>
-          </TouchableOpacity>
         </View>
         <View style={styles.botv}> 
           <TouchableOpacity
             style={styles.botao}
             onPress={
               () => {
+                props.navigation.navigate("Login")
               }
             }
           >
@@ -53,6 +50,7 @@ export default function App() {
             style={styles.botao}
             onPress={
               () => {
+                props.navigation.navigate("Cadastro")
               }
             }
           >

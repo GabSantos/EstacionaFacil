@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Text, Alert, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 
@@ -14,13 +14,91 @@ const fetchFonts = () => {
   })
 }
 
-export default function Login(props) {
+
+
+
+export default function OcuparVaga(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vaga, setVaga] = useState('')
+  const [data, setData] = useState([])
+
+  //#region 
+  // const login = 'http://localhost:8080/auth'
+  // const cadastro = 'http://localhost:8080/api/usuario'
+
+  // const email = props.route.params.email
+  // const senha = props.route.params.senha
+  // const nome = props.route.params.nomeCliente
+
+  // // if (props.route.params.login) {
+  //   useEffect(() => {
+  //     fetch(login, {
+  //       method: 'POST',
+  //       headers: {
+  //         Accept: 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         'email': email,
+  //         'senha': senha
+  //       }),
+  //     })
+  //       .then((response) => {
+  //         if (!response.ok) {
+  //           if (response.status == 400) {
+  //             Alert.alert("Email e/ou senha incorreto(s)");
+  //             props.navigation.goBack()
+  //           }
+  //         }
+  //         return response.json()
+  //       })
+  //       .then((json) => {
+  //         setData(json.dados)
+  //       }
+  //       )
+  //       .catch((error) => {
+  //         console.error(error)
+  //       })
+  //   }, []);
+  // // } else {
+  // //   useEffect(() => {
+  // //     fetch(cadastro, {
+  // //       method: 'POST',
+  // //       headers: {
+  // //         Accept: 'application/json',
+  // //         'Content-Type': 'application/json'
+  // //       },
+  // //       body: JSON.stringify({
+  // //         'email': email,
+  // //         'senha': senha,
+  // //         'nome': nome,
+  // //         'tipo': 'C',
+  // //         'ativo': true
+  // //       }),
+  // //     })
+  // //       .then((response) => {
+  // //         if (!response.ok) {
+  // //           if (response.status == 400) {
+  // //             Alert.alert("Ocorreu um erro");
+  // //             props.navigation.goBack()
+  // //           }
+  // //         }
+  // //         return response.json()
+  // //       })
+  // //       .then((json) => {
+  // //         setData(json.dados)
+  // //       }
+  // //       )
+  // //       .catch((error) => {
+  // //         console.error(error)
+  // //       })
+  // //   }, []);
+  // // }
+  //#endregion
 
   if (!dataLoaded) {
     return (
-      <AppLoading 
+      <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setDataLoaded(true)}
       />
@@ -34,21 +112,21 @@ export default function Login(props) {
       <ImageBackground source={background} style={styles.bg}>
         {/* Inicio da Header */}
         <View style={styles.header}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.botoesHeader}
             onPress={
               () => {
-
+                props.navigation.navigate("InfoCliente")
               }
-            }  
+            }
           >
             <ImageBackground source={user} style={styles.user} />
           </TouchableOpacity>
         </View>
         {/* Fim da Header Inicio da Modal */}
-        <Modal>
+        {/* <Modal>
 
-        </Modal>
+        </Modal> */}
         {/* Fim da Modal inicio da Vaga */}
         <View style={styles.vaga}>
           <ImageBackground source={vagaBg} style={styles.bg}>
@@ -65,17 +143,17 @@ export default function Login(props) {
         </View>
         {/* Fim da Vaga inicio do Botao */}
         <TouchableOpacity
-            style={styles.botao}
-            onPress={
-              () => {
-              }
+          style={styles.botao}
+          onPress={
+            () => {
             }
-          >
-            <Text style={styles.botaoText}>
-              Estacionar
+          }
+        >
+          <Text style={styles.botaoText}>
+            Estacionar
             </Text>
-          </TouchableOpacity>
-          {/* Fim do Botao */}
+        </TouchableOpacity>
+        {/* Fim do Botao */}
       </ImageBackground>
       {/* Fim view principal */}
     </View>
@@ -85,8 +163,8 @@ export default function Login(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100vw',
-    height: '100vh',
+    width: '100%',
+    height: '100%',
     padding: 0,
     margin: 0,
   },
@@ -170,7 +248,6 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     top: 0,
-    zIndex: -1,
     height: 60,
     padding: 0,
     margin: 0,

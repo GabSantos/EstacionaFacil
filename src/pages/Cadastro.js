@@ -32,7 +32,13 @@ export default function Cadstro(props) {
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
         <View style={styles.topv}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={
+              () => {
+                props.navigation.navigate("Inicial")
+              }
+            }
+          >
             <Text style={styles.estaciona}>
               ESTACIONA
                       </Text>
@@ -54,7 +60,6 @@ export default function Cadstro(props) {
             <TextInput
               placeholder='E-mail'
               placeholderTextColor='#fbfbfb'
-              autoCompleteType='email'
               onChange={text => setEmail(text)}
               style={styles.inputText}
             />
@@ -64,7 +69,6 @@ export default function Cadstro(props) {
               placeholder='Telefone'
               placeholderTextColor='#fbfbfb'
               keyboardType='numeric'
-              value={tel}
               onChange={text => setTel(text)}
               style={styles.inputText}
             />
@@ -74,7 +78,6 @@ export default function Cadstro(props) {
               placeholder='Senha'
               placeholderTextColor='#fbfbfb'
               secureTextEntry={true}
-              value={senha}
               onChange={text => setSenha(text)}
               style={styles.inputText}
               passwordRules={true}
@@ -84,6 +87,7 @@ export default function Cadstro(props) {
             style={styles.botao}
             onPress={
               () => {
+                props.navigation.navigate("OcuparVaga")
               }
             }
           >
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   topv: {
-    flex: 1,
+    flex: 0.7,
     width: '100%',
     padding: 0,
     margin: 0,
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   botv: {
-    flex: 1.2,
+    flex: 1.3,
     width: '100%',
     padding: 0,
     margin: 0,
