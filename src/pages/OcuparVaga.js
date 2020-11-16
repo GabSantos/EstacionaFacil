@@ -166,19 +166,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  header: {
-    width: '100%',
-    position: 'absolute',
-    top: 0,
-    zIndex: -1,
-    height: 60,
-    padding: 0,
-    margin: 0,
-    backgroundColor: '#0085FF',
-    borderBottomWidth: 4,
-    borderBottomColor: '#52ACFF',
-    justifyContent: 'center'
-  },
   botoesHeader: {
     height: 40,
     width: 40,

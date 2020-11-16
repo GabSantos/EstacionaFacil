@@ -44,40 +44,7 @@ export default function Cadastro(props) {
               }
             }  
           >
-             <ImageBackground source={voltar} style={styles.voltar} />
-             
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.botoesHeader}
-            onPress={
-              () => {
-
-              }
-            }  
-          >
               <ImageBackground source={estaciona} style={styles.estaciona} />
-             
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.botoesHeader}
-            onPress={
-              () => {
-
-              }
-            }  
-          >
-              <ImageBackground source={users} style={styles.users} />
-             
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.botoesHeader}
-            onPress={
-              () => {
-
-              }
-            }  
-          >
-              <ImageBackground source={carro} style={styles.carro} />
              
           </TouchableOpacity>
          
