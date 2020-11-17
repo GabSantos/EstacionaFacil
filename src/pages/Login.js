@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
@@ -14,8 +14,8 @@ const fetchFonts = () => {
 
 export default function Login(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
 
   if (!dataLoaded) {
     return (
@@ -33,7 +33,7 @@ export default function Login(props) {
           <TouchableOpacity
             onPress={
               () => {
-                props.navigation.navigate("Inicial")
+                props.navigation.goBack()
               }
             }
           >
@@ -49,17 +49,19 @@ export default function Login(props) {
           <View style={styles.inputs}>
             <TextInput
               placeholder='E-mail'
+              value={email}
               placeholderTextColor='#fbfbfb'
-              onChange={text => setEmail(text)}
+              onChangeText={text => setEmail(text)}
               style={styles.inputText}
             />
           </View>
           <View style={styles.inputs}>
             <TextInput
               placeholder='Senha'
+              value={senha}
               placeholderTextColor='#fbfbfb'
               secureTextEntry={true}
-              onChange={text => setSenha(text)}
+              onChangeText={text => setSenha(text)}
               style={styles.inputText}
               passwordRules={true}
             />
@@ -68,7 +70,7 @@ export default function Login(props) {
             style={styles.botao}
             onPress={
               () => {
-                props.navigation.navigate("OcuparVaga")
+                props.navigation.navigate("OcuparVaga", {emailCliente: email, senhaCliente: senha, login: true})
               }
             }
           >

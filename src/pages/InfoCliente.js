@@ -45,22 +45,47 @@ export default function InfoCliente(props) {
             <ImageBackground source={estaciona} style={styles.user} />
           </TouchableOpacity>
         </View>
-        
-
-
-
-        <TouchableOpacity
-          style={styles.botao}
-          onPress={
-            () => {
+        <View style={styles.infoContainer}>
+          <TouchableOpacity
+            style={styles.botao}
+            onPress={
+              () => {
+              }
             }
-          }
-        >
-          <Text style={styles.botaoText}>
-            Estacionar
+          >
+            <Text style={styles.botaoText}>
+              Veículos
             </Text>
-        </TouchableOpacity>
-        {/* Fim do Botao */}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botao}
+            onPress={
+              () => {
+              }
+            }
+          >
+            <Text style={styles.botaoText}>
+              Editar Conta
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.botao}
+            onPress={
+              () => {
+              }
+            }
+          >
+            <Text style={styles.botaoText}>
+              Sair
+            </Text>
+          </TouchableOpacity>
+          {/* Fim do Botao */}
+        </View>
+
+
+
+
+
       </ImageBackground>
       {/* Fim view principal */}
     </View>
@@ -117,18 +142,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   botao: {
-    backgroundColor: 'linear-gradient(90deg, rgba(255, 514, 0, 1) 100%, rgba(250,255,0,1) 100%)',
-    width: 240,
-    height: 50,
+    backgroundColor: 'linear-gradient(90deg, rgba(0, 133, 255, 1) 100%, rgba(82,172,255,1) 100%)',
+    width: '100%',
+    height: 54,
     borderRadius: 40,
-    marginTop: 30,
+    marginTop: 22,
+    marginBottom: 22,
     alignItems: 'center',
     justifyContent: 'center',
   },
   botaoText: {
     fontFamily: 'Modak',
-    fontSize: 25,
-    color: '#0085FF',
+    fontSize: 30,
+    color: '#fbfbfb',
     marginTop: 5
   },
   inputTextVaga: {
@@ -169,5 +195,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 15,
   },
+  infoContainer: {
+    position: 'absolute',
+    bottom: 60,
+    height: 350,
+    width: 280,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: "center",
+    justifyContent: "center",
+  }
 })
 

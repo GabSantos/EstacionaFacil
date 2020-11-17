@@ -7,6 +7,30 @@ import vagaBg from '../../assets/vaga.png'
 import background from '../../assets/fundotelainicial.png'
 import user from '../../assets/icons/user.png'
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+const storeData = async (key, value) => {
+  try {
+    await AsyncStorage.setItem('@'+key, value)
+  } catch (e) {
+    // saving error
+  }
+}
+
+const getData = async (key) => {
+  try {
+    const value = await AsyncStorage.getItem('@' + key)
+    if(value !== null) {
+      return value
+    }
+  } catch(e) {
+    // error reading value
+  }
+}
+
+const setModalVisible = (visible) => {
+  this.setState({ modalVisible: visible });
+}
+
 const fetchFonts = () => {
   return loadAsync({
     'Stardos': require('../../assets/fonts/StardosStencil-Bold.ttf'),
@@ -15,86 +39,86 @@ const fetchFonts = () => {
 }
 
 
-
-
 export default function OcuparVaga(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [vaga, setVaga] = useState('')
+  const [vaga, setVaga] = useState("")
   const [data, setData] = useState([])
+  const [modal, setModal] = useState(false)
 
-  //#region 
-  // const login = 'http://localhost:8080/auth'
-  // const cadastro = 'http://localhost:8080/api/usuario'
+  const email = props.route.params.emailCliente
+  const nome = props.route.params.nomeCliente
+  const senha = props.route.params.senhaCliente
+  const telefone = props.route.params.telefoneCliente
 
-  // const email = props.route.params.email
-  // const senha = props.route.params.senha
-  // const nome = props.route.params.nomeCliente
+  const login = 'http://192.168.15.11:8080/auth'
+  const cadastro = 'http://192.168.15.11:8080/api/usuario'
 
-  // // if (props.route.params.login) {
-  //   useEffect(() => {
-  //     fetch(login, {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         'email': email,
-  //         'senha': senha
-  //       }),
-  //     })
-  //       .then((response) => {
-  //         if (!response.ok) {
-  //           if (response.status == 400) {
-  //             Alert.alert("Email e/ou senha incorreto(s)");
-  //             props.navigation.goBack()
-  //           }
-  //         }
-  //         return response.json()
-  //       })
-  //       .then((json) => {
-  //         setData(json.dados)
-  //       }
-  //       )
-  //       .catch((error) => {
-  //         console.error(error)
-  //       })
-  //   }, []);
-  // // } else {
-  // //   useEffect(() => {
-  // //     fetch(cadastro, {
-  // //       method: 'POST',
-  // //       headers: {
-  // //         Accept: 'application/json',
-  // //         'Content-Type': 'application/json'
-  // //       },
-  // //       body: JSON.stringify({
-  // //         'email': email,
-  // //         'senha': senha,
-  // //         'nome': nome,
-  // //         'tipo': 'C',
-  // //         'ativo': true
-  // //       }),
-  // //     })
-  // //       .then((response) => {
-  // //         if (!response.ok) {
-  // //           if (response.status == 400) {
-  // //             Alert.alert("Ocorreu um erro");
-  // //             props.navigation.goBack()
-  // //           }
-  // //         }
-  // //         return response.json()
-  // //       })
-  // //       .then((json) => {
-  // //         setData(json.dados)
-  // //       }
-  // //       )
-  // //       .catch((error) => {
-  // //         console.error(error)
-  // //       })
-  // //   }, []);
-  // // }
-  //#endregion
+  if (props.route.params.login) {
+    useEffect(() => {
+      fetch(login, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'email': email,
+          'senha': senha
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status == 400) {
+              Alert.alert("Email e/ou senha incorreto(s)");
+              props.navigation.goBack()
+            }
+          }
+          return response.json()
+        })
+        .then((json) => {
+          setData(json.dados)
+        }
+        )
+        .catch((error) => {
+          console.error(error)
+        })
+    }, []);
+  } else {
+    useEffect(() => {
+      fetch(cadastro, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'email': email,
+          'senha': senha,
+          'nome': nome,
+          'telefone': telefone,
+          'tipo': 'C',
+          'ativo': true
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status == 400) {
+              Alert.alert("Ocorreu um erro");
+              props.navigation.goBack()
+            }
+          }
+          return response.json()
+        })
+        .then((json) => {
+          setData(json.dados)
+        }
+        )
+        .catch((error) => {
+          console.error(error)
+        })
+    }, []);
+  }
+
 
   if (!dataLoaded) {
     return (
@@ -124,9 +148,16 @@ export default function OcuparVaga(props) {
           </TouchableOpacity>
         </View>
         {/* Fim da Header Inicio da Modal */}
-        {/* <Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modal}
+          onRequestClose={() => {
+            //props.navigation.navigate("")
+          }}
+        >
 
-        </Modal> */}
+        </Modal>
         {/* Fim da Modal inicio da Vaga */}
         <View style={styles.vaga}>
           <ImageBackground source={vagaBg} style={styles.bg}>
@@ -146,6 +177,7 @@ export default function OcuparVaga(props) {
           style={styles.botao}
           onPress={
             () => {
+              setModalVisible(true)
             }
           }
         >
