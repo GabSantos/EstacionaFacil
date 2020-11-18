@@ -1,3 +1,4 @@
+  
 import React, { useState, useEffect } from 'react'
 import { Text, Alert, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
 import { loadAsync } from 'expo-font'
@@ -276,8 +277,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-<<<<<<< HEAD
-=======
   header: {
     width: '100%',
     position: 'absolute',
@@ -288,9 +287,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#0085FF',
     borderBottomWidth: 4,
     borderBottomColor: '#52ACFF',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
->>>>>>> b9b8f99b7e5706a8c5da96228b1b77acdd10a3d7
   botoesHeader: {
     height: 40,
     width: 40,
@@ -298,4 +296,3 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
 })
-
