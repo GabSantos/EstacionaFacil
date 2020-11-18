@@ -14,8 +14,8 @@ const fetchFonts = () => {
 
 export default function Login(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  const [email, setEmail] = useState("")
+  const [senha, setSenha] = useState("")
 
   if (!dataLoaded) {
     return (
@@ -30,7 +30,13 @@ export default function Login(props) {
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
         <View style={styles.topv}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={
+              () => {
+                props.navigation.goBack()
+              }
+            }
+          >
             <Text style={styles.estaciona}>
               ESTACIONA
                       </Text>
@@ -43,20 +49,19 @@ export default function Login(props) {
           <View style={styles.inputs}>
             <TextInput
               placeholder='E-mail'
-              placeholderTextColor='#fbfbfb'
-              autoCompleteType='email'
               value={email}
-              onChange={text => setEmail(text)}
+              placeholderTextColor='#fbfbfb'
+              onChangeText={text => setEmail(text)}
               style={styles.inputText}
             />
           </View>
           <View style={styles.inputs}>
             <TextInput
               placeholder='Senha'
+              value={senha}
               placeholderTextColor='#fbfbfb'
               secureTextEntry={true}
-              value={senha}
-              onChange={text => setSenha(text)}
+              onChangeText={text => setSenha(text)}
               style={styles.inputText}
               passwordRules={true}
             />
@@ -65,6 +70,7 @@ export default function Login(props) {
             style={styles.botao}
             onPress={
               () => {
+                props.navigation.navigate("OcuparVaga", {emailCliente: email, senhaCliente: senha, login: true})
               }
             }
           >
