@@ -8,13 +8,14 @@ import CadastroFuncionario from '../../pages/CadastroFuncionario'
 import OcuparVaga from '../../pages/OcuparVaga'
 import InfoCliente from '../../pages/InfoCliente'
 import EditInfo from '../../pages/EditInfo'
+import EditVeiculo from '../../pages/EditVeiculo'
 
 const Stack = createStackNavigator()
 
 export default function StackFunc(props) {
   return (
 
-    <Stack.Navigator initialRouteName="CadastroFuncionario"
+    <Stack.Navigator initialRouteName="EditVeiculo"
       screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login"
         component={Login} />
@@ -30,6 +31,8 @@ export default function StackFunc(props) {
         component={InfoCliente}/>     
       <Stack.Screen name="EditInfo"
         component={EditInfo} />
+      <Stack.Screen name="EditVeiculo"
+        component={EditVeiculo} />
     </Stack.Navigator>
   );
 }
