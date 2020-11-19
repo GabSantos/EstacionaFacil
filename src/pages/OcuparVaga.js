@@ -8,29 +8,6 @@ import vagaBg from '../../assets/vaga.png'
 import background from '../../assets/fundotelainicial.png'
 import user from '../../assets/icons/user.png'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const storeData = async (key, value) => {
-  try {
-    await AsyncStorage.setItem('@'+key, value)
-  } catch (e) {
-    // saving error
-  }
-}
-
-const getData = async (key) => {
-  try {
-    const value = await AsyncStorage.getItem('@' + key)
-    if(value !== null) {
-      return value
-    }
-  } catch(e) {
-    // error reading value
-  }
-}
-
-const setModalVisible = (visible) => {
-  this.setState({ modalVisible: visible });
-}
 
 const fetchFonts = () => {
   return loadAsync({
@@ -41,17 +18,41 @@ const fetchFonts = () => {
 
 
 export default function OcuparVaga(props) {
-  const [email, setEmail] = useState('')
-  const [token, setToken] = useState('')
-  const [id, setId] = useState('')
-  
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vaga, setVaga] = useState("")
   const [modal, setModal] = useState(false)
+  const [dados, setDados] = useState({})
 
-  setEmail(props.route.params.Email)
-  setToken(props.route.params.Token)
-  setId(props.route.params.Id)
+  const token = props.route.params.Token
+  const email = props.route.params.Email
+
+  console.log(email)
+  
+  useEffect(() => {
+    fetch('http://192.168.15.11:8080/api/usuario/' + email, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        if(json.dados.tipo !== "C"){
+          props.navigation.navigate("MainFuncionario", { Dados: json.dados, Token: token})
+        }
+        setDados(json.dados)
+      }
+      )
+      .catch((error) => {
+        console.error(error)
+      })
+  }, []);
+
+  
 
   if (!dataLoaded) {
     return (
@@ -73,7 +74,7 @@ export default function OcuparVaga(props) {
             style={styles.botoesHeader}
             onPress={
               () => {
-                props.navigation.navigate("InfoCliente", { Id: id, Email: email, Token: token})
+                props.navigation.navigate("InfoCliente", { Dados: dados, Token: token})
               }
             }
           >
@@ -110,7 +111,7 @@ export default function OcuparVaga(props) {
           style={styles.botao}
           onPress={
             () => {
-              setModalVisible(true)
+              setModal(true)
             }
           }
         >

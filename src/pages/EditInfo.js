@@ -14,13 +14,18 @@ const fetchFonts = () => {
 }
 
 export default function EditInfo(props) {
+  const dados = props.route.params.Dados
+  const token = props.route.params.Token
+
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [nome, setNome] = useState('')
-  const [email, setEmail] = useState('')
-  const [cpf, setCpf] = useState('')
-  const [telefone, setTelefone] = useState('')
+  const [nome, setNome] = useState(dados.nome)
+  const [email, setEmail] = useState(dados.email)
+  const [telefone, setTelefone] = useState(dados.telefone)
   const [senha, setSenha] = useState('')
 
+
+  
+  
   if (!dataLoaded) {
     return (
       <AppLoading
@@ -49,7 +54,7 @@ export default function EditInfo(props) {
           </TouchableOpacity>
         </View>
         <Text style={styles.text}>
-          {"Fulano de Tal"}
+          {dados.nome}
         </Text>
         <View style={styles.infoContainer}>
           <View style={styles.inputs}>
@@ -57,7 +62,6 @@ export default function EditInfo(props) {
               placeholder='nome'
               value={nome}
               placeholderTextColor='#fbfbfb'
-              secureTextEntry={true}
               onChangeText={text => setNome(text)}
               style={styles.inputText}
             />
@@ -67,18 +71,7 @@ export default function EditInfo(props) {
               placeholder='email'
               value={email}
               placeholderTextColor='#fbfbfb'
-              secureTextEntry={true}
               onChangeText={text => setEmail(text)}
-              style={styles.inputText}
-            />
-          </View>
-          <View style={styles.inputs}>
-            <TextInput
-              placeholder='CPF'
-              value={cpf}
-              placeholderTextColor='#fbfbfb'
-              secureTextEntry={true}
-              onChangeText={text => setCpf(text)}
               style={styles.inputText}
             />
           </View>
@@ -87,7 +80,6 @@ export default function EditInfo(props) {
               placeholder='telefone'
               value={telefone}
               placeholderTextColor='#fbfbfb'
-              secureTextEntry={true}
               onChangeText={text => setTelefone(text)}
               style={styles.inputText}
             />
@@ -100,15 +92,13 @@ export default function EditInfo(props) {
               secureTextEntry={true}
               onChangeText={text => setSenha(text)}
               style={styles.inputText}
-              passwordRules={true}
             />
           </View>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-
-              }
+            onPress={() => {
+              props.navigation.navigate('UpdateUser', { Dados: dados, Token: token, Email: email, Nome: nome, Telefone: telefone, Senha: senha})
+            }
             }
           >
             <Text style={styles.botaoText}>

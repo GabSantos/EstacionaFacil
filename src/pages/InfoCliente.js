@@ -15,8 +15,10 @@ const fetchFonts = () => {
 
 export default function InfoCliente(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [email, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+
+  const dados = props.route.params.Dados
+  const token = props.route.params.Token
+
 
   if (!dataLoaded) {
     return (
@@ -45,6 +47,11 @@ export default function InfoCliente(props) {
             <ImageBackground source={estaciona} style={styles.user} />
           </TouchableOpacity>
         </View>
+
+        <Text style={styles.nome}>
+          {dados.nome}
+        </Text>
+
         <View style={styles.infoContainer}>
           <TouchableOpacity
             style={styles.botao}
@@ -61,6 +68,7 @@ export default function InfoCliente(props) {
             style={styles.botao}
             onPress={
               () => {
+                props.navigation.navigate("EditInfo", { Dados: dados, Token: token })
               }
             }
           >
@@ -72,6 +80,7 @@ export default function InfoCliente(props) {
             style={styles.botao}
             onPress={
               () => {
+                props.navigation.navigate("Inicial")
               }
             }
           >
@@ -204,5 +213,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: "center",
     justifyContent: "center",
+  },
+  nome: {
+    position: 'absolute',
+    top: 120,
+    height: 'auto',
+    width: '90%',
+    fontSize: 50,
+    textAlign: 'center',
+    fontFamily: 'Stardos',
+    color: '#fbfbfb',
   }
 })

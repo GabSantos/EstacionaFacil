@@ -33,7 +33,7 @@ export default function Login(props) {
           <TouchableOpacity
             onPress={
               () => {
-                props.navigation.goBack()
+                props.navigation.navigate("Inicial")
               }
             }
           >

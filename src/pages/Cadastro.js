@@ -35,7 +35,7 @@ export default function Cadstro(props) {
           <TouchableOpacity
             onPress={
               () => {
-                props.navigation.goBack()
+                props.navigation.navigate("Inicial")
               }
             }
           >
@@ -87,7 +87,7 @@ export default function Cadstro(props) {
             style={styles.botao}
             onPress={
               () => {
-                props.navigation.navigate("LoadingLogin", { login: false,emailCliente: email, nomeCliente: nome, telefoneCliente: tel, senhaCliente: senha})
+                props.navigation.navigate("LoadingLogin", { login: false, emailCliente: email, nomeCliente: nome, telefoneCliente: tel, senhaCliente: senha})
               }
             }
           >

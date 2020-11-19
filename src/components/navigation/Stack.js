@@ -2,6 +2,7 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import LoadingLogin from './LoadingLogin'
+import UpdateUser from './UpdateUser'
 
 import Login from '../../pages/Login'
 import Cadastro from '../../pages/Cadastro'
@@ -12,6 +13,7 @@ import DesocuparVaga from '../../pages/DesocuparVaga'
 import InfoCliente from '../../pages/InfoCliente'
 import EditInfo from '../../pages/EditInfo'
 import MainFuncionario from '../../pages/MainFuncionario'
+import EditVeiculo from '../../pages/EditVeiculo'
 
 const Stack = createStackNavigator()
 
@@ -38,8 +40,12 @@ export default function StackFunc(props) {
         component={InfoCliente} />
       <Stack.Screen name="EditInfo"
         component={EditInfo} />
+      <Stack.Screen name="UpdateUser"
+        component={UpdateUser} />
       <Stack.Screen name="MainFuncionario"
         component={MainFuncionario} />
+      <Stack.Screen name="EditVeiculo"
+        component={EditVeiculo} />
     </Stack.Navigator>
   );
 }
