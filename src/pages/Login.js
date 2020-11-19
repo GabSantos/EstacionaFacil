@@ -70,7 +70,7 @@ export default function Login(props) {
             style={styles.botao}
             onPress={
               () => {
-                props.navigation.navigate("OcuparVaga", {emailCliente: email, senhaCliente: senha, login: true})
+                props.navigation.navigate("LoadingLogin", {emailCliente: email, senhaCliente: senha, login: true})
               }
             }
           >

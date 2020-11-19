@@ -1,4 +1,3 @@
-  
 import React, { useState, useEffect } from 'react'
 import { Text, Alert, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
 import { loadAsync } from 'expo-font'
@@ -6,12 +5,13 @@ import { AppLoading } from 'expo'
 
 import vagaBg from '../../assets/vaga.png'
 import background from '../../assets/fundotelainicial.png'
+import carro from '../../assets/carro.png'
 import user from '../../assets/icons/user.png'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const storeData = async (key, value) => {
   try {
-    await AsyncStorage.setItem('@'+key, value)
+    await AsyncStorage.setItem('@' + key, value)
   } catch (e) {
     // saving error
   }
@@ -20,16 +20,12 @@ const storeData = async (key, value) => {
 const getData = async (key) => {
   try {
     const value = await AsyncStorage.getItem('@' + key)
-    if(value !== null) {
+    if (value !== null) {
       return value
     }
-  } catch(e) {
+  } catch (e) {
     // error reading value
   }
-}
-
-const setModalVisible = (visible) => {
-  this.setState({ modalVisible: visible });
 }
 
 const fetchFonts = () => {
@@ -41,17 +37,8 @@ const fetchFonts = () => {
 
 
 export default function OcuparVaga(props) {
-  const [email, setEmail] = useState('')
-  const [token, setToken] = useState('')
-  const [id, setId] = useState('')
-  
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [vaga, setVaga] = useState("")
   const [modal, setModal] = useState(false)
-
-  setEmail(props.route.params.Email)
-  setToken(props.route.params.Token)
-  setId(props.route.params.Id)
 
   if (!dataLoaded) {
     return (
@@ -73,7 +60,7 @@ export default function OcuparVaga(props) {
             style={styles.botoesHeader}
             onPress={
               () => {
-                props.navigation.navigate("InfoCliente", { Id: id, Email: email, Token: token})
+                props.navigation.navigate("InfoCliente")
               }
             }
           >
@@ -85,23 +72,40 @@ export default function OcuparVaga(props) {
           animationType="slide"
           transparent={true}
           visible={modal}
+          style={styles.modalContainer}
           onRequestClose={() => {
             //props.navigation.navigate("")
           }}
         >
+          <View style={styles.modalContainer}>
 
+            <View style={styles.modal}>
+              <TouchableOpacity
+                style={styles.modal}
+                onPress={
+                  () => {
+                    setModal(false)
+                  }
+                }
+              >
+                <Text style={styles.modalText}>
+                  R$13,25
+                </Text>
+                <Text style={styles.modalText}>
+                  Vá até o caixa para realizar o pagamento
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+          </View>
         </Modal>
         {/* Fim da Modal inicio da Vaga */}
         <View style={styles.vaga}>
           <ImageBackground source={vagaBg} style={styles.bg}>
-            <View style={styles.inputVaga}>
-              <TextInput
-                placeholder='0000'
-                maxLength={4}
-                placeholderTextColor='#fbfbfb'
-                onChange={text => setVaga(text)}
-                style={styles.inputTextVaga}
-              />
+            <View style={styles.carroContainer}>
+              <ImageBackground source={carro} style={styles.carro}>
+                <Text style={styles.placa}>AAA1A111</Text>
+              </ImageBackground>
             </View>
           </ImageBackground>
         </View>
@@ -110,12 +114,12 @@ export default function OcuparVaga(props) {
           style={styles.botao}
           onPress={
             () => {
-              setModalVisible(true)
+              setModal(true)
             }
           }
         >
           <Text style={styles.botaoText}>
-            Estacionar
+            Sair
             </Text>
         </TouchableOpacity>
         {/* Fim do Botao */}
@@ -189,17 +193,9 @@ const styles = StyleSheet.create({
     color: '#0085FF',
     marginTop: 5
   },
-  inputTextVaga: {
-    height: '100%',
-    width: '100%',
-    fontSize: 70,
-    textAlign: 'center',
-    fontFamily: 'Stardos',
-    color: '#fbfbfb',
-  },
-  inputVaga: {
-    height: 100,
-    width: 190,
+  carroContainer: {
+    height: 238,
+    width: 238,
     borderColor: '#FFD600',
     borderBottomWidth: 10,
     justifyContent: 'center',
@@ -219,7 +215,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0085FF',
     borderBottomWidth: 4,
     borderBottomColor: '#52ACFF',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   botoesHeader: {
     height: 40,
@@ -227,4 +223,38 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 15,
   },
+  carro: {
+    height: 238,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placa: {
+    paddingTop: 35,
+    fontSize: 38,
+    color: '#ffd600',
+    fontWeight: 'bold'
+  },
+  modal: {
+    height: '70%',
+    width: '80%',
+    backgroundColor: '#FDEA00',
+    borderRadius: 40,
+    padding: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalContainer: {
+    height: '100%',
+    width: '100%',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalText: {
+    color: '#0085FF',
+    fontSize: 28,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  }
 })
+
