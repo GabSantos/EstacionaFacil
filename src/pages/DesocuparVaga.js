@@ -8,25 +8,6 @@ import background from '../../assets/fundotelainicial.png'
 import carro from '../../assets/carro.png'
 import user from '../../assets/icons/user.png'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const storeData = async (key, value) => {
-  try {
-    await AsyncStorage.setItem('@' + key, value)
-  } catch (e) {
-    // saving error
-  }
-}
-
-const getData = async (key) => {
-  try {
-    const value = await AsyncStorage.getItem('@' + key)
-    if (value !== null) {
-      return value
-    }
-  } catch (e) {
-    // error reading value
-  }
-}
 
 const fetchFonts = () => {
   return loadAsync({

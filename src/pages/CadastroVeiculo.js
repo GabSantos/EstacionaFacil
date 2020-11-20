@@ -13,13 +13,19 @@ const fetchFonts = () => {
   })
 }
 
-export default function InfoCliente(props) {
-  const [dataLoaded, setDataLoaded] = useState(false)
-
+export default function CadastroVeiculo(props) {
   const dados = props.route.params.Dados
   const token = props.route.params.Token
 
+  const [dataLoaded, setDataLoaded] = useState(false)
+  const [nome, setNome] = useState(dados.nome)
+  const [email, setEmail] = useState(dados.email)
+  const [telefone, setTelefone] = useState(dados.telefone)
+  const [senha, setSenha] = useState('')
 
+
+  
+  
   if (!dataLoaded) {
     return (
       <AppLoading
@@ -40,53 +46,63 @@ export default function InfoCliente(props) {
             style={styles.botoesHeader}
             onPress={
               () => {
-                props.navigation.navigate("OcuparVaga", { Email: dados.email, Token: token })
+                props.navigation.goBack()
               }
             }
           >
             <ImageBackground source={estaciona} style={styles.user} />
           </TouchableOpacity>
         </View>
-
-        <Text style={styles.nome}>
+        <Text style={styles.text}>
           {dados.nome}
         </Text>
-
         <View style={styles.infoContainer}>
+          <View style={styles.inputs}>
+            <TextInput
+              placeholder='nome'
+              value={nome}
+              placeholderTextColor='#fbfbfb'
+              onChangeText={text => setNome(text)}
+              style={styles.inputText}
+            />
+          </View>
+          <View style={styles.inputs}>
+            <TextInput
+              placeholder='email'
+              value={email}
+              placeholderTextColor='#fbfbfb'
+              onChangeText={text => setEmail(text)}
+              style={styles.inputText}
+            />
+          </View>
+          <View style={styles.inputs}>
+            <TextInput
+              placeholder='telefone'
+              value={telefone}
+              placeholderTextColor='#fbfbfb'
+              onChangeText={text => setTelefone(text)}
+              style={styles.inputText}
+            />
+          </View>
+          <View style={styles.inputs}>
+            <TextInput
+              placeholder='senha'
+              value={senha}
+              placeholderTextColor='#fbfbfb'
+              secureTextEntry={true}
+              onChangeText={text => setSenha(text)}
+              style={styles.inputText}
+            />
+          </View>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("Veiculos", { Dados: dados, Token: token })
-              }
+            onPress={() => {
+              props.navigation.navigate('UpdateUser', { Dados: dados, Token: token, Email: email, Nome: nome, Telefone: telefone, Senha: senha})
+            }
             }
           >
             <Text style={styles.botaoText}>
-              Veículos
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("EditInfo", { Dados: dados, Token: token })
-              }
-            }
-          >
-            <Text style={styles.botaoText}>
-              Editar Conta
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("Inicial")
-              }
-            }
-          >
-            <Text style={styles.botaoText}>
-              Sair
+              Salvar
             </Text>
           </TouchableOpacity>
           {/* Fim do Botao */}
@@ -137,13 +153,12 @@ const styles = StyleSheet.create({
     color: '#FBFBFB'
   },
   inputs: {
-    height: 54,
-    width: 280,
-    borderColor: '#FBFBFB',
-    borderWidth: 1,
-    borderRadius: 40,
+    height: 34,
+    width: 220,
+    borderColor: '#fcf400',
+    borderBottomWidth: 3,
     justifyContent: 'center',
-    margin: 20
+    margin: 10
   },
   inputText: {
     height: 54,
@@ -152,19 +167,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   botao: {
-    backgroundColor: 'linear-gradient(90deg, rgba(0, 133, 255, 1) 100%, rgba(82,172,255,1) 100%)',
-    width: '100%',
-    height: 54,
+    backgroundColor: 'linear-gradient(90deg, rgba(255, 514, 0, 1) 100%, rgba(250,255,0,1) 100%)',
+    width: 192,
+    height: 38,
     borderRadius: 40,
-    marginTop: 22,
-    marginBottom: 22,
+    marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
   },
   botaoText: {
     fontFamily: 'Modak',
-    fontSize: 30,
-    color: '#fbfbfb',
+    fontSize: 25,
+    color: '#0085FF',
     marginTop: 5
   },
   inputTextVaga: {
@@ -207,15 +221,17 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     position: 'absolute',
-    bottom: 60,
-    height: 350,
-    width: 280,
+    bottom: 50,
+    height: 370,
+    width: 300,
+    borderRadius: 40,
     display: 'flex',
     flexDirection: 'column',
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: 'linear-gradient(90deg, rgba(0, 133, 255, 1) 100%, rgba(82,172,255,1) 100%)'
   },
-  nome: {
+  text: {
     position: 'absolute',
     top: 120,
     height: 'auto',
@@ -226,3 +242,4 @@ const styles = StyleSheet.create({
     color: '#fbfbfb',
   }
 })
+

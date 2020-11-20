@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
+import { Text, FlatList, View, SafeAreaView, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 
 import background from '../../assets/fundoinfocliente.png'
 import estaciona from '../../assets/icons/estaciona.png'
+import ion_car from '../../assets/icons/ion_car.png'
+import carro from '../../assets/carro.png'
 
 const fetchFonts = () => {
   return loadAsync({
@@ -12,12 +14,42 @@ const fetchFonts = () => {
     'Modak': require('../../assets/fonts/Modak-Regular.ttf')
   })
 }
-
 export default function InfoCliente(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
+  const [dados, setDados] = useState([])
 
-  const dados = props.route.params.Dados
+  const dadosUsuario = props.route.params.Dados
   const token = props.route.params.Token
+ 
+  const fim = {
+    "id": "fim",
+    "marca": "s",
+    "cor": "s",
+    "placa": "Add Carro",
+    "tipo": "a",
+    "usuarioId": "adm"
+  }
+
+  useEffect(() => {
+    fetch('http://192.168.15.11:8080/api/veiculo/cliente/' + dadosUsuario.id, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        setDados(json.dados)
+      }
+      )
+      .catch((error) => {
+        console.error(error)
+      })
+  }, []);
 
 
   if (!dataLoaded) {
@@ -27,6 +59,53 @@ export default function InfoCliente(props) {
         onFinish={() => setDataLoaded(true)}
       />
     )
+  }
+
+  dados.push(fim)
+  const renderItem = ({ item }) => {
+    if (item.id === 'fim') {
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={
+              () => {
+                props.navigation.navigate('CadastroVeiculo', { Dados: dadosUsuario, Token: token})
+              }
+            }
+          >
+            <ImageBackground source={ion_car} style={styles.bgCar}/>
+          </TouchableOpacity>
+        </View>
+      )
+    } else {
+      const dadosCarro = {
+        "id": item.id,
+        "marca": item.marca,
+        "cor": item.cor,
+        "placa": item.placa,
+        "tipo": item.tipo,
+        "usuarioId": item.usuarioId
+      }
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={
+              () => {
+                props.navigation.navigate('EditVeiculo', { Carro: dadosCarro, Usuario: dadosUsuario, Token: token})
+              }
+            }
+          >
+            <ImageBackground source={carro} style={styles.bgCar}>
+              <Text style={styles.placa}>{item.placa}</Text>
+
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+
+      )
+    }
+
+
   }
 
   return (
@@ -40,64 +119,35 @@ export default function InfoCliente(props) {
             style={styles.botoesHeader}
             onPress={
               () => {
-                props.navigation.navigate("OcuparVaga", { Email: dados.email, Token: token })
+                props.navigation.navigate("OcuparVaga", { Email: dadosUsuario.email, Token: token })
               }
             }
           >
             <ImageBackground source={estaciona} style={styles.user} />
           </TouchableOpacity>
         </View>
-
         <Text style={styles.nome}>
-          {dados.nome}
+          {dadosUsuario.nome}
         </Text>
 
-        <View style={styles.infoContainer}>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("Veiculos", { Dados: dados, Token: token })
-              }
-            }
-          >
-            <Text style={styles.botaoText}>
-              Veículos
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("EditInfo", { Dados: dados, Token: token })
-              }
-            }
-          >
-            <Text style={styles.botaoText}>
-              Editar Conta
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("Inicial")
-              }
-            }
-          >
-            <Text style={styles.botaoText}>
-              Sair
-            </Text>
-          </TouchableOpacity>
-          {/* Fim do Botao */}
-        </View>
+        <SafeAreaView style={styles.carList}>
+          <FlatList
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={dados}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            style={styles.flatList}
+          />
+
+
+        </SafeAreaView>
 
 
 
 
 
       </ImageBackground>
-      {/* Fim view principal */}
     </View>
     // Fim View Geral container
   );
@@ -205,15 +255,26 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 15,
   },
-  infoContainer: {
-    position: 'absolute',
-    bottom: 60,
-    height: 350,
-    width: 280,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: "center",
-    justifyContent: "center",
+
+  bgCar: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 260,
+    width: 260,
+    marginTop: 150,
+  },
+  carList: {
+    marginTop: 90,
+    height: 238,
+    width: 'auto',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  flatList: {
+    marginTop: 180,
+    height: 600,
+    width: 'auto',
+    paddingRight: 60,
   },
   nome: {
     position: 'absolute',
@@ -224,5 +285,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Stardos',
     color: '#fbfbfb',
-  }
+  },
+  placa: {
+    marginTop: 30,
+    height: 45,
+    width: 190,
+    fontSize: 38,
+    color: '#ffd600',
+    textAlign: 'center'
+  },
 })

@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import LoadingLogin from './LoadingLogin'
 import UpdateUser from './UpdateUser'
+import UpdateCarro from './UpdateCarro'
 
 import Login from '../../pages/Login'
 import Cadastro from '../../pages/Cadastro'
@@ -13,7 +14,10 @@ import DesocuparVaga from '../../pages/DesocuparVaga'
 import InfoCliente from '../../pages/InfoCliente'
 import EditInfo from '../../pages/EditInfo'
 import MainFuncionario from '../../pages/MainFuncionario'
+import Veiculos from '../../pages/Veiculos'
 import EditVeiculo from '../../pages/EditVeiculo'
+import CadastroVeiculo from '../../pages/CadastroVeiculo'
+
 
 const Stack = createStackNavigator()
 
@@ -44,8 +48,14 @@ export default function StackFunc(props) {
         component={UpdateUser} />
       <Stack.Screen name="MainFuncionario"
         component={MainFuncionario} />
+      <Stack.Screen name="Veiculos"
+        component={Veiculos} />
       <Stack.Screen name="EditVeiculo"
         component={EditVeiculo} />
+      <Stack.Screen name="CadastroVeiculo"
+        component={CadastroVeiculo} />
+      <Stack.Screen name="UpdateCarro"
+        component={UpdateCarro} />
     </Stack.Navigator>
   );
 }

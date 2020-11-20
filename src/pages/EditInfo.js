@@ -46,7 +46,7 @@ export default function EditInfo(props) {
             style={styles.botoesHeader}
             onPress={
               () => {
-                props.navigation.goBack()
+                props.navigation.navigate("OcuparVaga", { Email: dados.email, Token: token })
               }
             }
           >

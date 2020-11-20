@@ -25,8 +25,6 @@ export default function OcuparVaga(props) {
 
   const token = props.route.params.Token
   const email = props.route.params.Email
-
-  console.log(email)
   
   useEffect(() => {
     fetch('http://192.168.15.11:8080/api/usuario/' + email, {
