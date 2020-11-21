@@ -8,7 +8,6 @@ import voltar from '../../assets/icons/voltar.png'
 import estaciona from '../../assets/icons/estaciona.png'
 import users from '../../assets/icons/users.png'
 import carro from '../../assets/icons/carro.png'
-import redondo from '../../assets/icons/redondo.png'
 
 const fetchFonts = () => {
   return loadAsync({
@@ -74,20 +73,19 @@ export default function Cadastro(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
+              props.navigation.navigate("AddVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
             }}
           >
             <ImageBackground source={carro} style={styles.icon} />
           </TouchableOpacity>
         </View>
-        
         <View style={styles.botv}>
           <View style={styles.inputs}>
             <TextInput
               placeholder='Nome'
               placeholderTextColor='#fbfbfb'
               value={nome}
-              onChangeText={text => setNome(text)}
+              onChange={text => setNome(text)}
               style={styles.inputText}
             />
           </View>
@@ -97,17 +95,7 @@ export default function Cadastro(props) {
               placeholderTextColor='#fbfbfb'
               autoCompleteType='email'
               value={email}
-              onChangeText={text => setEmail(text)}
-              style={styles.inputText}
-            />
-          </View>
-          <View style={styles.inputs}>
-            <TextInput
-              placeholder='Telefone'
-              placeholderTextColor='#fbfbfb'
-              keyboardType='numeric'
-              value={telefone}
-              onChangeText={text => setTelefone(text)}
+              onChange={text => setEmail(text)}
               style={styles.inputText}
             />
           </View>
@@ -115,18 +103,18 @@ export default function Cadastro(props) {
             <TextInput
               placeholder='senha'
               placeholderTextColor='#fbfbfb'
+              keyboardType='numeric'
               value={senha}
-              passwordRules={true}
-              secureTextEntry={true}
-              onChangeText={text => setSenha(text)}
+              onChange={text => setSenha(text)}
               style={styles.inputText}
             />
           </View>
           <TouchableOpacity
             style={styles.botao}
-            onPress={() => {
-              props.navigation.navigate('UpdateFuncionario', { Dados: dados, Token: token, Nome: nome, Email: email, Telefone: telefone, Senha: senha })
-              }}
+            onPress={
+              () => {
+              }
+            }
           >
             <Text style={styles.botaoText}>
               Cadastrar
@@ -143,27 +131,22 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     padding: 0,
-    margin: 0
+    margin: 0,
   },
   bg: {
     width: '100%',
-    height: '100%'
-  },
-  topv: {
-    flex: 1,
-    width: '100%',
-    padding: 0,
-    margin: 0,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  botv: {
-    flex: 1.2,
-    width: '100%',
-    padding: 0,
-    margin: 0,
-    marginTop: 190,
+    height: '100%',
+    display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  vaga: {
+    marginTop: 60,
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   estaciona: {
     fontFamily: 'Stardos',
@@ -183,51 +166,44 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 40,
     justifyContent: 'center',
-    margin: 10,
+    margin: 20
   },
   inputText: {
     height: 54,
     width: 244,
     marginLeft: 18,
     fontSize: 20,
-    fontFamily: "Modak"
   },
   botao: {
     backgroundColor: 'linear-gradient(90deg, rgba(255, 514, 0, 1) 100%, rgba(250,255,0,1) 100%)',
-    width: 192,
-    height: 38,
+    width: 240,
+    height: 50,
     borderRadius: 40,
-    marginTop: 70,
+    marginTop: 30,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  voltar: {
-    height: '100%',
-    width: '100%',
-  },
   botaoText: {
     fontFamily: 'Modak',
-    fontSize: 20,
+    fontSize: 25,
     color: '#0085FF',
     marginTop: 5
   },
-  botoesHeader: {
-    height: 40,
-    width: 40,
-    marginLeft: 10,
-    marginRight: 15,
-  },
-  estaciona: {
+  inputTextVaga: {
     height: '100%',
     width: '100%',
+    fontSize: 70,
+    textAlign: 'center',
+    fontFamily: 'Stardos',
+    color: '#fbfbfb',
   },
-  users: {
-    height: '100%',
-    width: '100%',
-  },
-  carro: {
-    height: '100%',
-    width: '100%',
+  inputVaga: {
+    height: 100,
+    width: 190,
+    borderColor: '#FFD600',
+    borderBottomWidth: 10,
+    justifyContent: 'center',
+    margin: 20
   },
   icon: {
     width: '100%',
@@ -252,6 +228,26 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 25,
   },
-
+  direita: {
+    height: 60,
+    width: '100%',
+    backgroundColor: 'linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255,255,0,1) 50%)',
+    flexDirection: 'row'
+  },
+  esquerda: {
+    height: 60,
+    width: '100%',
+    backgroundColor: 'linear-gradient(90deg, rgba(255, 255, 0, 1) 50%, rgba(255,255,255,1) 0%)',
+    flexDirection: 'row'
+  },
+  flatList: {
+    marginTop:60,
+    width: '100%',
+    height: 'auto'
+  },
+  funcList: {
+    width: '100%',
+    height: 'auto'
+  },
 })
 

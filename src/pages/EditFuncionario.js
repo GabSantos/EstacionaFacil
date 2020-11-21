@@ -18,14 +18,16 @@ const fetchFonts = () => {
 }
 
 export default function Cadastro(props) {
+  const usuario = props.route.params.Usuario
+  const token = props.route.params.Token
+  const funcionario = props.route.params.Funcionario
+
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [nome, setNome] = useState('')
-  const [email, setEmail] = useState('')
-  const [telefone, setTelefone] = useState('')
+  const [nome, setNome] = useState(funcionario.nome)
+  const [email, setEmail] = useState(funcionario.email)
+  const [telefone, setTelefone] = useState(funcionario.telefone)
   const [senha, setSenha] = useState('')
 
-  const dados = props.route.params.Dados
-  const token = props.route.params.Token
 
   if (!dataLoaded) {
     return (
@@ -46,41 +48,49 @@ export default function Cadastro(props) {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={() => {
-              props.navigation.navigate("MainFuncionario", { Dados: dados, Token: token })
-            }}
+            onPress={
+              () => {
+                props.navigation.navigate("CadastroFuncionario", { Dados: dados, Token: token })
+              }
+            }
           >
             <ImageBackground source={voltar} style={styles.icon} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={() => {
-              props.navigation.navigate("Funcionarios", { Dados: dados, Token: token }) // Listar todos funcionarios
-            }}
-          >
-            <ImageBackground source={users} style={styles.icon} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.botoesHeader}
-            onPress={() => {
-              props.navigation.navigate("Vagas", { Dados: dados, Token: token }) //Listar todas vagas
-            }}
+            onPress={
+              () => {
+                props.navigation.navigate("Vagas")
+              }
+            }
           >
             <ImageBackground source={estaciona} style={styles.icon} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={() => {
-              props.navigation.navigate("CadastroVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
-            }}
+            onPress={
+              () => {
+                props.navigation.navigate("Funcionarios")
+              }
+            }
+          >
+            <ImageBackground source={users} style={styles.icon} />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.botoesHeader}
+            onPress={
+              () => {
+                props.navigation.navigate("AddVaga")
+              }
+            }
           >
             <ImageBackground source={carro} style={styles.icon} />
           </TouchableOpacity>
+
         </View>
-        
         <View style={styles.botv}>
           <View style={styles.inputs}>
             <TextInput
@@ -103,7 +113,7 @@ export default function Cadastro(props) {
           </View>
           <View style={styles.inputs}>
             <TextInput
-              placeholder='Telefone'
+              placeholder='telefone'
               placeholderTextColor='#fbfbfb'
               keyboardType='numeric'
               value={telefone}
@@ -115,21 +125,31 @@ export default function Cadastro(props) {
             <TextInput
               placeholder='senha'
               placeholderTextColor='#fbfbfb'
-              value={senha}
-              passwordRules={true}
               secureTextEntry={true}
+              passwordRules={true}
               onChangeText={text => setSenha(text)}
               style={styles.inputText}
             />
           </View>
+
           <TouchableOpacity
             style={styles.botao}
-            onPress={() => {
-              props.navigation.navigate('UpdateFuncionario', { Dados: dados, Token: token, Nome: nome, Email: email, Telefone: telefone, Senha: senha })
-              }}
+            onPress={
+              () => {
+                props.navigation.navigate('UpdateFuncionario', {
+                  Dados: usuario,
+                  Token: token,
+                  Nome: nome,
+                  Email: email,
+                  Telefone: telefone,
+                  Senha: senha,
+                  Funcionario: funcionario
+                })
+              }
+            }
           >
             <Text style={styles.botaoText}>
-              Cadastrar
+              Salvar
             </Text>
           </TouchableOpacity>
         </View>
@@ -190,7 +210,7 @@ const styles = StyleSheet.create({
     width: 244,
     marginLeft: 18,
     fontSize: 20,
-    fontFamily: "Modak"
+    color: '#FBFBFB',
   },
   botao: {
     backgroundColor: 'linear-gradient(90deg, rgba(255, 514, 0, 1) 100%, rgba(250,255,0,1) 100%)',

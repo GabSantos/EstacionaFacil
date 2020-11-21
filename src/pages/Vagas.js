@@ -1,40 +1,17 @@
 
 import React, { useState, useEffect } from 'react'
-import { Text, Alert, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
+import { Text, SafeAreaView, View, FlatList, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 
-import vagaBg from '../../assets/vaga.png'
 import background from '../../assets/fundotelainicial.png'
 
 import user from '../../assets/icons/user.png'
 import users from '../../assets/icons/users.png'
 import carro from '../../assets/icons/carro.png'
-import estaciona from '../../assets/icons/estaciona.png'
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
-const storeData = async (key, value) => {
-  try {
-    await AsyncStorage.setItem('@' + key, value)
-  } catch (e) {
-    // saving error
-  }
-}
-
-const getData = async (key) => {
-  try {
-    const value = await AsyncStorage.getItem('@' + key)
-    if (value !== null) {
-      return value
-    }
-  } catch (e) {
-    // error reading value
-  }
-}
-
-const setModalVisible = (visible) => {
-  this.setState({ modalVisible: visible });
-}
+import voltar from '../../assets/icons/voltar.png'
+import esquerda from '../../assets/esquerda.png'
+import direita from '../../assets/direita.png'
 
 const fetchFonts = () => {
   return loadAsync({
@@ -46,9 +23,7 @@ const fetchFonts = () => {
 
 export default function Vagas(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [vaga, setVaga] = useState("")
-  const [data, setData] = useState([])
-  const [modal, setModal] = useState(false)
+  const [vagas, setVagas] = useState([])
 
   // const email = props.route.params.emailCliente
   // const nome = props.route.params.nomeCliente
@@ -134,22 +109,21 @@ export default function Vagas(props) {
     )
   }
 
-  const render = () => {
+  let cont = 1
+  const renderItem = ({ item }) => {
+    let bgList
+    if (cont % 2 != 0) {
+      bgList = esquerda
+      cont++
+    } else {
+      bgList = direita
+      cont++
+    }
     const array = [
       { vaga: 'A2', status: 'Ocupado', entrada: '12:30', valor: '0' },
       { vaga: 'A7', status: 'Ocupado', entrada: '11:22', valor: '0' },
       { vaga: 'A11', status: 'Aguardando pagamento', entrada: '11:00', valor: '21,50' }
     ]
-    let vira = false
-    const lado = () => {
-      if (vira) {
-        vira = false
-        return styles.direita
-      } else {
-        vira = true
-        return styles.esquerda
-      }
-    }
 
     const status = (object) => {
       if (object.vaga == 'Ocupado') {
@@ -181,58 +155,55 @@ export default function Vagas(props) {
     <View style={styles.container}>
       {/* Inicio View principal */}
       <ImageBackground source={background} style={styles.bg}>
-        {/* Inicio da Header */}
         <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.botoesHeader}
+            onPress={() => {
+              props.navigation.navigate("MainFuncionario", { Dados: dados, Token: token })
+            }}
+          >
+            <ImageBackground source={voltar} style={styles.icon} />
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("CadastroFuncionario")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("CadastroFuncionario", { Dados: dados, Token: token })
+            }}
           >
             <ImageBackground source={user} style={styles.icon} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("Vagas")
-              }
-            }
-          >
-            <ImageBackground source={estaciona} style={styles.icon} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("Funcionarios")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("Funcionarios", { Dados: dados, Token: token }) // Listar todos funcionarios
+            }}
           >
             <ImageBackground source={users} style={styles.icon} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("AddVaga")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("CadastroVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
+            }}
           >
             <ImageBackground source={carro} style={styles.icon} />
           </TouchableOpacity>
-
         </View>
         {/* Fim da Modal inicio da Vaga */}
-        <View style={styles.vaga}>
-          {render()}
-        </View>
+        <SafeAreaView style={styles.funcList}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            data={vagas}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            style={styles.flatList}
+          />
+
+
+        </SafeAreaView>
         {/* Fim da Vaga inicio do Botao */}
         <TouchableOpacity
           style={styles.botao}
@@ -367,5 +338,14 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'linear-gradient(90deg, rgba(255, 255, 0, 1) 50%, rgba(255,255,255,1) 0%)',
     flexDirection: 'row'
+  },
+  flatList: {
+    marginTop: 60,
+    width: '100%',
+    height: 'auto'
+  },
+  funcList: {
+    width: '100%',
+    height: 'auto'
   },
 })

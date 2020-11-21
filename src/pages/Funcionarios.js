@@ -1,15 +1,18 @@
 
 import React, { useState, useEffect } from 'react'
-import { Text, SafeAreaView, View, FlatList, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
+import { Text, FlatList, View, SafeAreaView, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 
 import background from '../../assets/fundotelainicial.png'
 
 import user from '../../assets/icons/user.png'
-import users from '../../assets/icons/users.png'
+import voltar from '../../assets/icons/voltar.png'
 import carro from '../../assets/icons/carro.png'
 import estaciona from '../../assets/icons/estaciona.png'
+import esquerda from '../../assets/esquerda.png'
+import direita from '../../assets/direita.png'
+
 
 const fetchFonts = () => {
   return loadAsync({
@@ -21,38 +24,32 @@ const fetchFonts = () => {
 
 export default function MainFuncionario(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [vagasOcupadas, setVagasOcupadas] = useState([])
+  const [funcionarios, setFuncionarios] = useState([])
+  const [contador, setContador] = useState(1)
 
-  const dados = {
-    "id": "1",
-    "nome": "Usuario adm",
-    "email": "adm@email.com",
-    "senha": "$2a$10$FHayM6spzm5LGUa//VKYKe9iWLPlSnYpdwGEkvHMlCEZUIsr4EEIG",
-    "telefone": "4444444444",
-    "tipo": "A"
-  }//props.route.params.Dados
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1AZW1haWwuY29tIiwicm9sZSI6IlJPTEVfRlVOQyIsImNyZWF0ZWQiOjE2MDU4OTI0Nzg4MzAsImV4cCI6MTYwNjQ5NzI3OH0.hr83_tQP963QQRxQpJWVXWhZ-pgIvo3AkO0yVlETsZfBbheaxcccM7FfGWIcytNNNFGa5m0j0I7Vcbp7rSHXaw'//props.route.params.Token
+  const dados = props.route.params.Dados
+  const token = props.route.params.Token
 
-  // useEffect(() => {
-  //   fetch('http://192.168.15.11:8080/api/vagaOcupada/BuscarTodas', {
-  //     method: 'GET',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer ' + token
-  //     }
-  //   })
-  //     .then((response) => {
-  //       return response.json()
-  //     })
-  //     .then((json) => {
-  //       setData(json.dados)
-  //     }
-  //     )
-  //     .catch((error) => {
-  //       console.error(error)
-  //     })
-  // }, []);
+  useEffect(() => {
+    fetch('http://192.168.15.11:8080/api/usuario/funcionario/todos', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        setFuncionarios(json.dados)
+      }
+      )
+      .catch((error) => {
+        console.error(error)
+      })
+  }, []);
 
 
 
@@ -64,9 +61,17 @@ export default function MainFuncionario(props) {
       />
     )
   }
-
-
+  
+  let cont = 1
   const renderItem = ({ item }) => {
+    let bgList
+    if(cont%2 != 0){
+      bgList = esquerda
+      cont++
+    } else {
+      bgList = direita
+      cont++
+    }
 
     const objFuncionario = {
       "id": item.id,
@@ -85,19 +90,30 @@ export default function MainFuncionario(props) {
             }
           }
         >
-          <ImageBackground source={esquerda} style={styles.funcionarioContainer}>
+          <ImageBackground source={bgList} style={styles.funcionarioContainer}>
             <Text style={styles.nome}>{item.nome}</Text>
           </ImageBackground>
         </TouchableOpacity>
       </View>
 
     )
+
+
+
   }
 
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
-        <View style={styles.header}>
+      <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.botoesHeader}
+            onPress={() => {
+              props.navigation.navigate("MainFuncionario", { Dados: dados, Token: token })
+            }}
+          >
+            <ImageBackground source={voltar} style={styles.icon} />
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.botoesHeader}
@@ -106,15 +122,6 @@ export default function MainFuncionario(props) {
             }}
           >
             <ImageBackground source={user} style={styles.icon} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={styles.botoesHeader}
-            onPress={() => {
-              props.navigation.navigate("Funcionarios", { Dados: dados, Token: token }) // Listar todos funcionarios
-            }}
-          >
-            <ImageBackground source={users} style={styles.icon} />
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -139,11 +146,12 @@ export default function MainFuncionario(props) {
         <SafeAreaView style={styles.funcList}>
           <FlatList
             showsHorizontalScrollIndicator={false}
-            data={vagasOcupadas}
+            data={funcionarios}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             style={styles.flatList}
           />
+
 
         </SafeAreaView>
       </ImageBackground>
@@ -162,8 +170,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   vaga: {
     marginTop: 60,
@@ -265,8 +271,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'linear-gradient(90deg, rgba(255, 255, 0, 1) 50%, rgba(255,255,255,1) 0%)',
     flexDirection: 'row'
   },
+  funcionarioContainer: {
+    width: '100%',
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   flatList: {
-    marginTop:60,
+    marginTop: 60,
     width: '100%',
     height: 'auto'
   },
@@ -274,4 +286,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto'
   },
+  nome: {
+    height: '100%',
+    width: '100%',
+    fontSize: 25,
+    textAlign: 'center',
+    fontFamily: 'Modak',
+    color: '#fbfbfb',
+    textAlignVertical: 'center'
+  }
 })
