@@ -17,6 +17,8 @@ import MainFuncionario from '../../pages/MainFuncionario'
 import Veiculos from '../../pages/Veiculos'
 import EditVeiculo from '../../pages/EditVeiculo'
 import CadastroVeiculo from '../../pages/CadastroVeiculo'
+import VerVagas from '../../pages/VerVagas'
+
 
 
 const Stack = createStackNavigator()
@@ -24,7 +26,7 @@ const Stack = createStackNavigator()
 export default function StackFunc(props) {
   return (
 
-    <Stack.Navigator initialRouteName="Inicial"
+    <Stack.Navigator initialRouteName="CadastroVeiculo"
       screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login"
         component={Login} />
@@ -56,6 +58,8 @@ export default function StackFunc(props) {
         component={CadastroVeiculo} />
       <Stack.Screen name="UpdateCarro"
         component={UpdateCarro} />
+      <Stack.Screen name="VerVagas"
+        component={VerVagas} />
     </Stack.Navigator>
   );
 }
