@@ -25,79 +25,30 @@ export default function Vagas(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vagas, setVagas] = useState([])
 
-  // const email = props.route.params.emailCliente
-  // const nome = props.route.params.nomeCliente
-  // const senha = props.route.params.senhaCliente
-  // const telefone = props.route.params.telefoneCliente
+  const dados = props.route.params.Dados
+  const token = props.route.params.Token
 
-  // const login = 'http://192.168.15.11:8080/auth'
-  // const cadastro = 'http://192.168.15.11:8080/api/usuario'
+  useEffect(() => {
+    fetch('http://192.168.15.11:8080/api/vaga/todas', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        setVagas(json.dados)
+      }
+      )
+      .catch((error) => {
+        console.error(error)
+      })
+  }, []);
 
-  // if (props.route.params.login) {
-  //   useEffect(() => {
-  //     fetch(login, {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         'email': email,
-  //         'senha': senha
-  //       }),
-  //     })
-  //       .then((response) => {
-  //         if (!response.ok) {
-  //           if (response.status == 400) {
-  //             Alert.alert("Email e/ou senha incorreto(s)");
-  //             props.navigation.goBack()
-  //           }
-  //         }
-  //         return response.json()
-  //       })
-  //       .then((json) => {
-  //         setData(json.dados)
-  //       }
-  //       )
-  //       .catch((error) => {
-  //         console.error(error)
-  //       })
-  //   }, []);
-  // } else {
-  //   useEffect(() => {
-  //     fetch(cadastro, {
-  //       method: 'POST',
-  //       headers: {
-  //         Accept: 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         'email': email,
-  //         'senha': senha,
-  //         'nome': nome,
-  //         'telefone': telefone,
-  //         'tipo': 'C',
-  //         'ativo': true
-  //       }),
-  //     })
-  //       .then((response) => {
-  //         if (!response.ok) {
-  //           if (response.status == 400) {
-  //             Alert.alert("Ocorreu um erro");
-  //             props.navigation.goBack()
-  //           }
-  //         }
-  //         return response.json()
-  //       })
-  //       .then((json) => {
-  //         setData(json.dados)
-  //       }
-  //       )
-  //       .catch((error) => {
-  //         console.error(error)
-  //       })
-  //   }, []);
-  // }
 
 
   if (!dataLoaded) {
@@ -119,34 +70,33 @@ export default function Vagas(props) {
       bgList = direita
       cont++
     }
-    const array = [
-      { vaga: 'A2', status: 'Ocupado', entrada: '12:30', valor: '0' },
-      { vaga: 'A7', status: 'Ocupado', entrada: '11:22', valor: '0' },
-      { vaga: 'A11', status: 'Aguardando pagamento', entrada: '11:00', valor: '21,50' }
-    ]
 
-    const status = (object) => {
-      if (object.vaga == 'Ocupado') {
-        return <Text>{object.entrada}</Text>
-      } else {
-        return <Text>{object.valor}</Text>
-      }
+    const objVaga = {
+      "id": item.id,
+      "nome": item.nome,
+      "email": item.email,
+      "telefone": item.telefone,
+      "senha": item.senha,
+      "usuarioId": item.usuarioId
     }
-
     return (
-      array.map(object => {
-        <View style={lado()}>
-          <Text>
-            {object.vaga}
-          </Text>
-          <Text>
-            {object.vaga}
-          </Text>
-          {status(object)}
-        </View>
-      })
+      <View>
+        <TouchableOpacity
+          onPress={
+            () => {
+              props.navigation.navigate('UpdateVaga', { Vaga: objVaga, Usuario: dados, Token: token })
+            }
+          }
+        >
+          <ImageBackground source={bgList} style={styles.funcionarioContainer}>
+            <Text style={styles.nome}>{item.codVaga}</Text>
+          </ImageBackground>
+        </TouchableOpacity>
+      </View>
 
     )
+
+
 
   }
 
@@ -327,6 +277,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 25,
   },
+
   direita: {
     height: 60,
     width: '100%',
@@ -339,6 +290,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'linear-gradient(90deg, rgba(255, 255, 0, 1) 50%, rgba(255,255,255,1) 0%)',
     flexDirection: 'row'
   },
+  funcionarioContainer: {
+    width: '100%',
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   flatList: {
     marginTop: 60,
     width: '100%',
@@ -348,4 +305,13 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto'
   },
+  nome: {
+    height: '100%',
+    width: '100%',
+    fontSize: 25,
+    textAlign: 'center',
+    fontFamily: 'Modak',
+    color: '#fbfbfb',
+    textAlignVertical: 'center'
+  }
 })

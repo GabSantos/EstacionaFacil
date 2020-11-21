@@ -25,7 +25,6 @@ const fetchFonts = () => {
 export default function MainFuncionario(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [funcionarios, setFuncionarios] = useState([])
-  const [contador, setContador] = useState(1)
 
   const dados = props.route.params.Dados
   const token = props.route.params.Token
@@ -61,7 +60,7 @@ export default function MainFuncionario(props) {
       />
     )
   }
-  
+
   let cont = 1
   const renderItem = ({ item }) => {
     let bgList
