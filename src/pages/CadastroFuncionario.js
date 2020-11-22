@@ -24,21 +24,11 @@ export default function Cadastro(props) {
   const [telefone, setTelefone] = useState('')
   const [senha, setSenha] = useState('')
 
-  const dados = props.route.params.Dados
+  const usuario = props.route.params.Usuario
   const token = props.route.params.Token
 
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
-
-
-
-
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
   return (
     <View style={styles.container}>
@@ -47,40 +37,36 @@ export default function Cadastro(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("MainFuncionario", { Dados: dados, Token: token })
+              props.navigation.navigate('MainFuncionario', { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={voltar} style={styles.icon} />
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("Funcionarios", { Dados: dados, Token: token }) // Listar todos funcionarios
+              props.navigation.navigate('Funcionarios', { Usuario: usuario, Token: token }) // Listar todos funcionarios
             }}
           >
             <ImageBackground source={users} style={styles.icon} />
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("Vagas", { Dados: dados, Token: token }) //Listar todas vagas
+              props.navigation.navigate('Vagas', { Usuario: usuario, Token: token }) //Listar todas vagas
             }}
           >
             <ImageBackground source={estaciona} style={styles.icon} />
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
+              props.navigation.navigate('CadastroVaga', { Usuario: usuario, Token: token }) // Cadastrar nova vaga
             }}
           >
             <ImageBackground source={carro} style={styles.icon} />
           </TouchableOpacity>
         </View>
-        
         <View style={styles.botv}>
           <View style={styles.inputs}>
             <TextInput
@@ -125,8 +111,8 @@ export default function Cadastro(props) {
           <TouchableOpacity
             style={styles.botao}
             onPress={() => {
-              props.navigation.navigate('UpdateFuncionario', { Dados: dados, Token: token, Nome: nome, Email: email, Telefone: telefone, Senha: senha })
-              }}
+              props.navigation.navigate('UpdateFuncionario', { Usuario: usuario, Token: token, Nome: nome, Email: email, Telefone: telefone, Senha: senha })
+            }}
           >
             <Text style={styles.botaoText}>
               Cadastrar
@@ -149,14 +135,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%'
   },
-  topv: {
-    flex: 1,
-    width: '100%',
-    padding: 0,
-    margin: 0,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   botv: {
     flex: 1.2,
     width: '100%',
@@ -164,17 +142,6 @@ const styles = StyleSheet.create({
     margin: 0,
     marginTop: 190,
     alignItems: 'center',
-  },
-  estaciona: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    color: '#FBFBFB'
-  },
-  facil: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    marginLeft: 150,
-    color: '#FBFBFB'
   },
   inputs: {
     height: 54,
@@ -201,10 +168,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  voltar: {
-    height: '100%',
-    width: '100%',
-  },
   botaoText: {
     fontFamily: 'Modak',
     fontSize: 20,
@@ -216,18 +179,6 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 10,
     marginRight: 15,
-  },
-  estaciona: {
-    height: '100%',
-    width: '100%',
-  },
-  users: {
-    height: '100%',
-    width: '100%',
-  },
-  carro: {
-    height: '100%',
-    width: '100%',
   },
   icon: {
     width: '100%',
@@ -251,7 +202,6 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 20,
     marginRight: 25,
-  },
-
+  }
 })
 

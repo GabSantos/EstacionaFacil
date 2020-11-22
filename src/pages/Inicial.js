@@ -1,46 +1,41 @@
 import React, { useState } from 'react'
-import {Text, View, StyleSheet,ImageBackground, TouchableOpacity} from 'react-native'
+import { Text, View, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 import background from '../../assets/fundotelainicial.png'
 
+
+// Função carrega fontes externas
 const fetchFonts = () => {
   return loadAsync({
     'Stardos': require('../../assets/fonts/StardosStencil-Bold.ttf'),
     'Modak': require('../../assets/fonts/Modak-Regular.ttf')
   })
 }
-
 export default function App(props) {
+  // Carrega fontes externas
   const [dataLoaded, setDataLoaded] = useState(false)
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
   return (
+
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
         <View style={styles.topv}>
-            <Text style={styles.estaciona}>
-              ESTACIONA
-                      </Text>
-            <Text style={styles.facil}>
-              FÁCIL
-            </Text>
+          <Text style={styles.estaciona}>
+            ESTACIONA
+          </Text>
+          <Text style={styles.facil}>
+            FÁCIL
+          </Text>
         </View>
-        <View style={styles.botv}> 
+        <View style={styles.botv}>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("Login")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('Login')
+            }}
           >
             <Text style={styles.botaoText}>
               Entrar
@@ -48,11 +43,9 @@ export default function App(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("Cadastro")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('Cadastro')
+            }}
           >
             <Text style={styles.botaoText}>
               Cadastrar
@@ -100,21 +93,6 @@ const styles = StyleSheet.create({
     fontSize: 60,
     marginLeft: 150,
     color: '#FBFBFB'
-  },
-  inputs: {
-    height: 54,
-    width: 280,
-    borderColor: '#FBFBFB',
-    borderWidth: 1,
-    borderRadius: 40,
-    justifyContent: 'center',
-    margin: 20
-  },
-  inputText: {
-    height: 54,
-    width: 244,
-    marginLeft: 18,
-    fontSize: 20,
   },
   botao: {
     backgroundColor: 'linear-gradient(90deg, rgba(255, 514, 0, 1) 100%, rgba(250,255,0,1) 100%)',

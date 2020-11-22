@@ -10,6 +10,8 @@ import user from '../../assets/icons/user.png'
 import users from '../../assets/icons/users.png'
 import carro from '../../assets/icons/carro.png'
 import estaciona from '../../assets/icons/estaciona.png'
+import esquerda from '../../assets/esquerda.png'
+import direita from '../../assets/direita.png'
 
 const fetchFonts = () => {
   return loadAsync({
@@ -18,41 +20,55 @@ const fetchFonts = () => {
   })
 }
 
-
 export default function MainFuncionario(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vagasOcupadas, setVagasOcupadas] = useState([])
+  const [vagas, setVagas] = useState([])
+  const [objVaga, setObjVaga] = useState({})
+  const usuario = props.route.params.Dados
+  const token = props.route.params.Token
 
-  const dados = {
-    "id": "1",
-    "nome": "Usuario adm",
-    "email": "adm@email.com",
-    "senha": "$2a$10$FHayM6spzm5LGUa//VKYKe9iWLPlSnYpdwGEkvHMlCEZUIsr4EEIG",
-    "telefone": "4444444444",
-    "tipo": "A"
-  }//props.route.params.Dados
-  const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1AZW1haWwuY29tIiwicm9sZSI6IlJPTEVfRlVOQyIsImNyZWF0ZWQiOjE2MDU4OTI0Nzg4MzAsImV4cCI6MTYwNjQ5NzI3OH0.hr83_tQP963QQRxQpJWVXWhZ-pgIvo3AkO0yVlETsZfBbheaxcccM7FfGWIcytNNNFGa5m0j0I7Vcbp7rSHXaw'//props.route.params.Token
+  useEffect(() => {
+    fetch('http://192.168.15.11:8080/api/vagaOcupada/VagasOcupadasNaoPagas', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        setVagasOcupadas(json.dados)
+      }
+      )
+      .catch((error) => {
+        console.error(error)
+      })
+  }, []);
 
-  // useEffect(() => {
-  //   fetch('http://192.168.15.11:8080/api/vagaOcupada/BuscarTodas', {
-  //     method: 'GET',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer ' + token
-  //     }
-  //   })
-  //     .then((response) => {
-  //       return response.json()
-  //     })
-  //     .then((json) => {
-  //       setData(json.dados)
-  //     }
-  //     )
-  //     .catch((error) => {
-  //       console.error(error)
-  //     })
-  // }, []);
+  useEffect(() => {
+    fetch('http://192.168.15.11:8080/api/vaga/todas', {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        setVagas(json.dados)
+      }
+      )
+      .catch((error) => {
+        console.error(error)
+      })
+  }, []);
 
 
 
@@ -65,33 +81,73 @@ export default function MainFuncionario(props) {
     )
   }
 
+  const run = map =>{
+    var data = new Date(map),
+        dia  = data.getDate().toString(),
+        diaF = (dia.length == 1) ? '0'+dia : dia,
+        mes  = (data.getMonth()+1).toString(), //+1 pois no getMonth Janeiro começa com zero.
+        mesF = (mes.length == 1) ? '0'+mes : mes,
+        anoF = data.getFullYear(),
+        hora = (data.getHours()-3).toString(),
+        minuto = data.getMinutes().toString();
+    return (hora + "").padStart(2,"0") + ":" + (minuto + "").padStart(2,"0");
+}
 
+
+  let cont = 1
   const renderItem = ({ item }) => {
-
-    const objFuncionario = {
-      "id": item.id,
-      "nome": item.nome,
-      "email": item.email,
-      "telefone": item.telefone,
-      "senha": item.senha,
-      "usuarioId": item.usuarioId
+    let bgList
+    if (cont % 2 != 0) {
+      bgList = esquerda
+      cont++
+    } else {
+      bgList = direita
+      cont++
     }
+
+
+    vagas.forEach(element => {
+      if (item.vaga == element.id) {
+        setObjVaga({
+          "id": element.id,
+          "codVaga": element.codVaga,
+          "disponivel": element.disponivel
+        })
+      }
+    });
+
+    const objVagaOcupada = {
+      "id": item.id,
+      "horaEntrada": item.horaEntrada,
+      "horaSaida": item.horaSaida,
+      "valor": item.valor,
+      "paga": item.paga,
+      "vaga": item.vaga,
+      "veiculo": item.veiculo
+    }
+
+    const status = objVagaOcupada.horaSaida ? "Aguardando pagamento" : "Ocupado"
+    const horario = objVagaOcupada.horaSaida ? "R$" + objVagaOcupada.valor : run(objVagaOcupada.horaEntrada)
+
     return (
       <View>
         <TouchableOpacity
-          onPress={
-            () => {
-              props.navigation.navigate('EditFuncionario', { Funcionario: objFuncionario, Usuario: dados, Token: token })
-            }
-          }
+          onPress={() => {
+            //props.navigation.navigate('ConfirmaPagamento', { Vaga: objVaga, Usuario: usuario, Token: token })
+          }}
         >
-          <ImageBackground source={esquerda} style={styles.funcionarioContainer}>
-            <Text style={styles.nome}>{item.nome}</Text>
+          <ImageBackground source={bgList} style={styles.funcionarioContainer}>
+            <Text style={styles.codVaga}>{objVaga.codVaga}</Text>
+            <Text style={styles.status}>{status}</Text>
+            <Text style={styles.status}>{status}</Text>
           </ImageBackground>
         </TouchableOpacity>
       </View>
 
     )
+
+
+
   }
 
   return (
@@ -266,7 +322,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   flatList: {
-    marginTop:60,
+    marginTop: 60,
     width: '100%',
     height: 'auto'
   },

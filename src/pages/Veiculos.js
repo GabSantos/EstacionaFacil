@@ -14,13 +14,14 @@ const fetchFonts = () => {
     'Modak': require('../../assets/fonts/Modak-Regular.ttf')
   })
 }
+
 export default function InfoCliente(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [dados, setDados] = useState([])
+  const [carros, setCarros] = useState([])
 
-  const dadosUsuario = props.route.params.Dados
+  const usuario = props.route.params.Usuario
   const token = props.route.params.Token
- 
+
   const fim = {
     "id": "fim",
     "marca": "s",
@@ -31,7 +32,7 @@ export default function InfoCliente(props) {
   }
 
   useEffect(() => {
-    fetch('http://192.168.15.11:8080/api/veiculo/cliente/' + dadosUsuario.id, {
+    fetch('http://192.168.15.11:8080/api/veiculo/cliente/' + usuario.id, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -43,7 +44,7 @@ export default function InfoCliente(props) {
         return response.json()
       })
       .then((json) => {
-        setDados(json.dados)
+        setCarros(json.dados)
       }
       )
       .catch((error) => {
@@ -52,33 +53,25 @@ export default function InfoCliente(props) {
   }, []);
 
 
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
-  dados.push(fim)
+  carros.push(fim)
   const renderItem = ({ item }) => {
     if (item.id === 'fim') {
       return (
         <View>
           <TouchableOpacity
-            onPress={
-              () => {
-                props.navigation.navigate('CadastroVeiculo', { Dados: dadosUsuario, Token: token})
-              }
-            }
+            onPress={() => {
+                props.navigation.navigate('CadastroVeiculo', { Usuario: usuario, Token: token })
+              }}
           >
-            <ImageBackground source={ion_car} style={styles.bgCar}/>
+            <ImageBackground source={ion_car} style={styles.bgCar} />
           </TouchableOpacity>
         </View>
       )
     } else {
-      const dadosCarro = {
+      const objCarro = {
         "id": item.id,
         "marca": item.marca,
         "cor": item.cor,
@@ -89,47 +82,35 @@ export default function InfoCliente(props) {
       return (
         <View>
           <TouchableOpacity
-            onPress={
-              () => {
-                props.navigation.navigate('EditVeiculo', { Carro: dadosCarro, Usuario: dadosUsuario, Token: token})
-              }
-            }
+            onPress={() => {
+                props.navigation.navigate('EditVeiculo', { Carro: objCarro, Usuario: usuario, Token: token })
+              }}
           >
             <ImageBackground source={carro} style={styles.bgCar}>
               <Text style={styles.placa}>{item.placa}</Text>
-
             </ImageBackground>
           </TouchableOpacity>
         </View>
-
       )
     }
-
-
   }
 
   return (
-    // Inicio View Geral container
     <View style={styles.container}>
-      {/* Inicio View principal */}
       <ImageBackground source={background} style={styles.bg}>
-        {/* Inicio da Header */}
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("OcuparVaga", { Email: dadosUsuario.email, Token: token })
-              }
-            }
+            onPress={() => {
+                props.navigation.navigate('OcuparVaga', { Email: usuario.email, Token: token })
+              }}
           >
             <ImageBackground source={estaciona} style={styles.user} />
           </TouchableOpacity>
         </View>
         <Text style={styles.nome}>
-          {dadosUsuario.nome}
+          {usuario.nome}
         </Text>
-
         <SafeAreaView style={styles.carList}>
           <FlatList
             horizontal
@@ -139,17 +120,9 @@ export default function InfoCliente(props) {
             keyExtractor={(item) => item.id}
             style={styles.flatList}
           />
-
-
         </SafeAreaView>
-
-
-
-
-
       </ImageBackground>
     </View>
-    // Fim View Geral container
   );
 }
 
@@ -166,72 +139,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  vaga: {
-    marginTop: 60,
-    height: 360,
-    width: 270,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  estaciona: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    color: '#FBFBFB'
-  },
-  facil: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    marginLeft: 150,
-    color: '#FBFBFB'
-  },
-  inputs: {
-    height: 54,
-    width: 280,
-    borderColor: '#FBFBFB',
-    borderWidth: 1,
-    borderRadius: 40,
-    justifyContent: 'center',
-    margin: 20
-  },
-  inputText: {
-    height: 54,
-    width: 244,
-    marginLeft: 18,
-    fontSize: 20,
-  },
-  botao: {
-    backgroundColor: 'linear-gradient(90deg, rgba(0, 133, 255, 1) 100%, rgba(82,172,255,1) 100%)',
-    width: '100%',
-    height: 54,
-    borderRadius: 40,
-    marginTop: 22,
-    marginBottom: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  botaoText: {
-    fontFamily: 'Modak',
-    fontSize: 30,
-    color: '#fbfbfb',
-    marginTop: 5
-  },
-  inputTextVaga: {
-    height: '100%',
-    width: '100%',
-    fontSize: 70,
-    textAlign: 'center',
-    fontFamily: 'Stardos',
-    color: '#fbfbfb',
-  },
-  inputVaga: {
-    height: 100,
-    width: 190,
-    borderColor: '#FFD600',
-    borderBottomWidth: 10,
-    justifyContent: 'center',
-    margin: 20
   },
   user: {
     height: '100%',
@@ -255,7 +162,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 15,
   },
-
   bgCar: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -293,5 +199,5 @@ const styles = StyleSheet.create({
     fontSize: 38,
     color: '#ffd600',
     textAlign: 'center'
-  },
+  }
 })

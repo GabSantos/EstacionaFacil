@@ -5,7 +5,7 @@ import { Text, Alert } from 'react-native'
 
 const UpdateFuncionario = (props) => {
 
-  const dados = props.route.params.Dados
+  const usuario = props.route.params.Usuario
   const token = props.route.params.Token
   const nome = props.route.params.Nome
   const email = props.route.params.Email
@@ -41,10 +41,9 @@ const UpdateFuncionario = (props) => {
             props.navigation.goBack()
           } else {
             Alert.alert('Alteração realizada com sucesso');
-            props.navigation.navigate('MainFuncionario', { Dados: dados, Token: token})
+            props.navigation.navigate('MainFuncionario', { Usuario: usuario, Token: token})
           }
-        }
-        )
+        })
         .catch((error) => {
           console.error(error)
         }).then(() => { })
@@ -76,19 +75,16 @@ const UpdateFuncionario = (props) => {
             props.navigation.goBack()
           } else {
             Alert.alert('Cadastro realizado com sucesso');
-            props.navigation.navigate('MainFuncionario', { Dados: dados, Token: token })
+            props.navigation.navigate('MainFuncionario', { Usuario: usuario, Token: token })
           }
-        }
-        )
+        })
         .catch((error) => {
           console.error(error)
         }).then(() => { })
     }, []);
   }
 
-  
-
-  return <Text>0</Text>
+  return <Text>Carregando</Text>
 }
 
 export default UpdateFuncionario

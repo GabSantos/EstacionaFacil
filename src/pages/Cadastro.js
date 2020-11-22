@@ -13,35 +13,28 @@ const fetchFonts = () => {
 }
 
 export default function Cadstro(props) {
-  const [dataLoaded, setDataLoaded] = useState(false)
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
-  const [tel, setTel] = useState('')
+  const [telefone, setTelefone] = useState('')
   const [senha, setSenha] = useState('')
 
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+
+  const [dataLoaded, setDataLoaded] = useState(false)
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
         <View style={styles.topv}>
           <TouchableOpacity
-            onPress={
-              () => {
-                props.navigation.navigate("Inicial")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("Inicial")
+            }}
           >
             <Text style={styles.estaciona}>
               ESTACIONA
-                      </Text>
+            </Text>
             <Text style={styles.facil}>
               FÁCIL
             </Text>
@@ -51,6 +44,7 @@ export default function Cadstro(props) {
           <View style={styles.inputs}>
             <TextInput
               placeholder='Nome'
+              value={nome}
               placeholderTextColor='#fbfbfb'
               onChangeText={text => setNome(text)}
               style={styles.inputText}
@@ -59,6 +53,7 @@ export default function Cadstro(props) {
           <View style={styles.inputs}>
             <TextInput
               placeholder='E-mail'
+              value={email}
               placeholderTextColor='#fbfbfb'
               onChangeText={text => setEmail(text)}
               style={styles.inputText}
@@ -67,15 +62,17 @@ export default function Cadstro(props) {
           <View style={styles.inputs}>
             <TextInput
               placeholder='Telefone'
+              value={telefone}
               placeholderTextColor='#fbfbfb'
               keyboardType='numeric'
-              onChangeText={text => setTel(text)}
+              onChangeText={text => setTelefone(text)}
               style={styles.inputText}
             />
           </View>
           <View style={styles.inputs}>
             <TextInput
               placeholder='Senha'
+              value={senha}
               placeholderTextColor='#fbfbfb'
               secureTextEntry={true}
               onChangeText={text => setSenha(text)}
@@ -85,11 +82,9 @@ export default function Cadstro(props) {
           </View>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("LoadingLogin", { login: false, emailCliente: email, nomeCliente: nome, telefoneCliente: tel, senhaCliente: senha})
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("LoadingLogin", { login: false, Email: email, Nome: nome, Telefone: telefone, Senha: senha })
+            }}
           >
             <Text style={styles.botaoText}>
               Cadastrar
@@ -168,6 +163,5 @@ const styles = StyleSheet.create({
     color: '#0085FF',
     marginTop: 5
   }
-
 })
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
@@ -12,7 +12,7 @@ const fetchFonts = () => {
     'Modak': require('../../assets/fonts/Modak-Regular.ttf')
   })
 }
-
+///////////////////////////// ainda não feito
 export default function CadastroVeiculo(props) {
   const dados = props.route.params.Dados
   const token = props.route.params.Token

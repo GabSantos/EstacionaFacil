@@ -5,6 +5,8 @@ import { AppLoading } from 'expo'
 
 import background from '../../assets/fundotelainicial.png'
 
+
+// Função carrega fontes externas
 const fetchFonts = () => {
   return loadAsync({
     'Stardos': require('../../assets/fonts/StardosStencil-Bold.ttf'),
@@ -13,33 +15,29 @@ const fetchFonts = () => {
 }
 
 export default function Login(props) {
-  const [dataLoaded, setDataLoaded] = useState(false)
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
 
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+  // Carrega fontes externas
+  const [dataLoaded, setDataLoaded] = useState(false)
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
+
+
 
   return (
+
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
         <View style={styles.topv}>
           <TouchableOpacity
-            onPress={
-              () => {
-                props.navigation.navigate("Inicial")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('Inicial')
+            }}
           >
             <Text style={styles.estaciona}>
               ESTACIONA
-                      </Text>
+            </Text>
             <Text style={styles.facil}>
               FÁCIL
             </Text>
@@ -68,11 +66,9 @@ export default function Login(props) {
           </View>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("LoadingLogin", {emailCliente: email, senhaCliente: senha, login: true})
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("LoadingLogin", { Email: email, Senha: senha, login: true })
+            }}
           >
             <Text style={styles.botaoText}>
               Entrar

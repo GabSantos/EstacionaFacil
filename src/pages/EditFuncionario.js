@@ -8,7 +8,6 @@ import voltar from '../../assets/icons/voltar.png'
 import estaciona from '../../assets/icons/estaciona.png'
 import users from '../../assets/icons/users.png'
 import carro from '../../assets/icons/carro.png'
-import redondo from '../../assets/icons/redondo.png'
 
 const fetchFonts = () => {
   return loadAsync({
@@ -29,18 +28,8 @@ export default function Cadastro(props) {
   const [senha, setSenha] = useState('')
 
 
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
-
-
-
-
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
   return (
     <View style={styles.container}>
@@ -48,48 +37,36 @@ export default function Cadastro(props) {
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("CadastroFuncionario", { Dados: dados, Token: token })
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('CadastroFuncionario', { Usuario: usuario, Token: token })
+            }}
           >
             <ImageBackground source={voltar} style={styles.icon} />
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("Vagas")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('Vagas')
+            }}
           >
             <ImageBackground source={estaciona} style={styles.icon} />
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("Funcionarios")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('Funcionarios', { Usuario: usuario, Token: token })
+            }}
           >
             <ImageBackground source={users} style={styles.icon} />
           </TouchableOpacity>
-
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("AddVaga")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('CadastroVaga', { Usuario: usuario, Token: token })
+            }}
           >
             <ImageBackground source={carro} style={styles.icon} />
           </TouchableOpacity>
-
         </View>
         <View style={styles.botv}>
           <View style={styles.inputs}>
@@ -134,19 +111,17 @@ export default function Cadastro(props) {
 
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate('UpdateFuncionario', {
-                  Dados: usuario,
-                  Token: token,
-                  Nome: nome,
-                  Email: email,
-                  Telefone: telefone,
-                  Senha: senha,
-                  Funcionario: funcionario
-                })
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('UpdateFuncionario', {
+                Dados: usuario,
+                Token: token,
+                Nome: nome,
+                Email: email,
+                Telefone: telefone,
+                Senha: senha,
+                Funcionario: funcionario
+              })
+            }}
           >
             <Text style={styles.botaoText}>
               Salvar
@@ -169,14 +144,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%'
   },
-  topv: {
-    flex: 1,
-    width: '100%',
-    padding: 0,
-    margin: 0,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
   botv: {
     flex: 1.2,
     width: '100%',
@@ -184,17 +151,6 @@ const styles = StyleSheet.create({
     margin: 0,
     marginTop: 190,
     alignItems: 'center',
-  },
-  estaciona: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    color: '#FBFBFB'
-  },
-  facil: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    marginLeft: 150,
-    color: '#FBFBFB'
   },
   inputs: {
     height: 54,
@@ -221,10 +177,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  voltar: {
-    height: '100%',
-    width: '100%',
-  },
   botaoText: {
     fontFamily: 'Modak',
     fontSize: 20,
@@ -236,18 +188,6 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 10,
     marginRight: 15,
-  },
-  estaciona: {
-    height: '100%',
-    width: '100%',
-  },
-  users: {
-    height: '100%',
-    width: '100%',
-  },
-  carro: {
-    height: '100%',
-    width: '100%',
   },
   icon: {
     width: '100%',
@@ -271,7 +211,5 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 20,
     marginRight: 25,
-  },
-
+  }
 })
-

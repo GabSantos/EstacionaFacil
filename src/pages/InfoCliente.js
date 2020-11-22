@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 
@@ -16,50 +16,36 @@ const fetchFonts = () => {
 export default function InfoCliente(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
 
-  const dados = props.route.params.Dados
+  const usuario = props.route.params.Usuario
   const token = props.route.params.Token
 
 
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
+
 
   return (
-    // Inicio View Geral container
     <View style={styles.container}>
-      {/* Inicio View principal */}
       <ImageBackground source={background} style={styles.bg}>
-        {/* Inicio da Header */}
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.navigate("OcuparVaga", { Email: dados.email, Token: token })
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('OcuparVaga', { Email: usuario.email, Token: token })
+            }}
           >
             <ImageBackground source={estaciona} style={styles.user} />
           </TouchableOpacity>
         </View>
-
         <Text style={styles.nome}>
-          {dados.nome}
+          {usuario.nome}
         </Text>
-
         <View style={styles.infoContainer}>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("Veiculos", { Dados: dados, Token: token })
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("Veiculos", { Usuario: usuario, Token: token })
+            }}
           >
             <Text style={styles.botaoText}>
               Veículos
@@ -67,11 +53,9 @@ export default function InfoCliente(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("EditInfo", { Dados: dados, Token: token })
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("EditInfo", { Usuario: usuario, Token: token })
+            }}
           >
             <Text style={styles.botaoText}>
               Editar Conta
@@ -79,27 +63,17 @@ export default function InfoCliente(props) {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.botao}
-            onPress={
-              () => {
-                props.navigation.navigate("Inicial")
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate("Inicial")
+            }}
           >
             <Text style={styles.botaoText}>
               Sair
             </Text>
           </TouchableOpacity>
-          {/* Fim do Botao */}
         </View>
-
-
-
-
-
       </ImageBackground>
-      {/* Fim view principal */}
     </View>
-    // Fim View Geral container
   );
 }
 
@@ -117,40 +91,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  vaga: {
-    marginTop: 60,
-    height: 360,
-    width: 270,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  estaciona: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    color: '#FBFBFB'
-  },
-  facil: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    marginLeft: 150,
-    color: '#FBFBFB'
-  },
-  inputs: {
-    height: 54,
-    width: 280,
-    borderColor: '#FBFBFB',
-    borderWidth: 1,
-    borderRadius: 40,
-    justifyContent: 'center',
-    margin: 20
-  },
-  inputText: {
-    height: 54,
-    width: 244,
-    marginLeft: 18,
-    fontSize: 20,
-  },
   botao: {
     backgroundColor: 'linear-gradient(90deg, rgba(0, 133, 255, 1) 100%, rgba(82,172,255,1) 100%)',
     width: '100%',
@@ -166,22 +106,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#fbfbfb',
     marginTop: 5
-  },
-  inputTextVaga: {
-    height: '100%',
-    width: '100%',
-    fontSize: 70,
-    textAlign: 'center',
-    fontFamily: 'Stardos',
-    color: '#fbfbfb',
-  },
-  inputVaga: {
-    height: 100,
-    width: 190,
-    borderColor: '#FFD600',
-    borderBottomWidth: 10,
-    justifyContent: 'center',
-    margin: 20
   },
   user: {
     height: '100%',

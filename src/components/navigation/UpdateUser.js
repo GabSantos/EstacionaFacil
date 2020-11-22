@@ -5,7 +5,7 @@ import { Text, Alert } from 'react-native'
 
 const UpdateUser = (props) => {
 
-  const dados = props.route.params.Dados
+  const usuario = props.route.params.Usuario
   const token = props.route.params.Token
   const nome = props.route.params.Nome
   const email = props.route.params.Email
@@ -20,7 +20,7 @@ const UpdateUser = (props) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        'id': dados.id,
+        'id': usuario.id,
         'nome': nome,
         'email': email,
         'senha': senha,
@@ -38,16 +38,15 @@ const UpdateUser = (props) => {
           props.navigation.goBack()
         } else {
           Alert.alert('Alteração realizada com sucesso');
-          props.navigation.navigate('InfoCliente', { Dados: json.dados, Token: token})
+          props.navigation.navigate('InfoCliente', { Usuario: json.dados, Token: token})
         }
-      }
-      )
+      })
       .catch((error) => {
         console.error(error)
       }).then(() => { })
   }, []);
 
-  return <Text>0</Text>
+  return <Text>Carregando</Text>
 }
 
 export default UpdateUser

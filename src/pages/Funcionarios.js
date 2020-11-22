@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react'
 import { Text, FlatList, View, SafeAreaView, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
@@ -26,7 +25,7 @@ export default function MainFuncionario(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [funcionarios, setFuncionarios] = useState([])
 
-  const dados = props.route.params.Dados
+  const usuario = props.route.params.Usuario
   const token = props.route.params.Token
 
   useEffect(() => {
@@ -52,19 +51,13 @@ export default function MainFuncionario(props) {
 
 
 
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
   let cont = 1
   const renderItem = ({ item }) => {
     let bgList
-    if(cont%2 != 0){
+    if (cont % 2 != 0) {
       bgList = esquerda
       cont++
     } else {
@@ -83,32 +76,30 @@ export default function MainFuncionario(props) {
     return (
       <View>
         <TouchableOpacity
-          onPress={
-            () => {
-              props.navigation.navigate('EditFuncionario', { Funcionario: objFuncionario, Usuario: dados, Token: token })
-            }
-          }
+          onPress={() => {
+            props.navigation.navigate('EditFuncionario', {
+              Funcionario: objFuncionario,
+              Usuario: usuario,
+              Token: token
+            })
+          }}
         >
           <ImageBackground source={bgList} style={styles.funcionarioContainer}>
             <Text style={styles.nome}>{item.nome}</Text>
           </ImageBackground>
         </TouchableOpacity>
       </View>
-
     )
-
-
-
   }
 
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
-      <View style={styles.header}>
+        <View style={styles.header}>
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("MainFuncionario", { Dados: dados, Token: token })
+              props.navigation.navigate('MainFuncionario', { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={voltar} style={styles.icon} />
@@ -117,7 +108,7 @@ export default function MainFuncionario(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroFuncionario", { Dados: dados, Token: token })
+              props.navigation.navigate('CadastroFuncionario', { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={user} style={styles.icon} />
@@ -126,7 +117,7 @@ export default function MainFuncionario(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("Vagas", { Dados: dados, Token: token }) //Listar todas vagas
+              props.navigation.navigate('Vagas', { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={estaciona} style={styles.icon} />
@@ -135,13 +126,12 @@ export default function MainFuncionario(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
+              props.navigation.navigate('CadastroVaga', { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={carro} style={styles.icon} />
           </TouchableOpacity>
         </View>
-
         <SafeAreaView style={styles.funcList}>
           <FlatList
             showsHorizontalScrollIndicator={false}
@@ -150,8 +140,6 @@ export default function MainFuncionario(props) {
             keyExtractor={(item) => item.id}
             style={styles.flatList}
           />
-
-
         </SafeAreaView>
       </ImageBackground>
     </View>
@@ -169,71 +157,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     display: 'flex',
-  },
-  vaga: {
-    marginTop: 60,
-    height: '100%',
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  estaciona: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    color: '#FBFBFB'
-  },
-  facil: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    marginLeft: 150,
-    color: '#FBFBFB'
-  },
-  inputs: {
-    height: 54,
-    width: 280,
-    borderColor: '#FBFBFB',
-    borderWidth: 1,
-    borderRadius: 40,
-    justifyContent: 'center',
-    margin: 20
-  },
-  inputText: {
-    height: 54,
-    width: 244,
-    marginLeft: 18,
-    fontSize: 20,
-  },
-  botao: {
-    backgroundColor: 'linear-gradient(90deg, rgba(255, 514, 0, 1) 100%, rgba(250,255,0,1) 100%)',
-    width: 240,
-    height: 50,
-    borderRadius: 40,
-    marginTop: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  botaoText: {
-    fontFamily: 'Modak',
-    fontSize: 25,
-    color: '#0085FF',
-    marginTop: 5
-  },
-  inputTextVaga: {
-    height: '100%',
-    width: '100%',
-    fontSize: 70,
-    textAlign: 'center',
-    fontFamily: 'Stardos',
-    color: '#fbfbfb',
-  },
-  inputVaga: {
-    height: 100,
-    width: 190,
-    borderColor: '#FFD600',
-    borderBottomWidth: 10,
-    justifyContent: 'center',
-    margin: 20
   },
   icon: {
     width: '100%',

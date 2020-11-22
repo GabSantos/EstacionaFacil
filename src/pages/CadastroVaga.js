@@ -4,6 +4,7 @@ import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 
 import background from '../../assets/fundotelainicial.png'
+import vagaBg from '../../assets/vaga.png'
 import voltar from '../../assets/icons/voltar.png'
 import estaciona from '../../assets/icons/estaciona.png'
 import users from '../../assets/icons/users.png'
@@ -18,10 +19,7 @@ const fetchFonts = () => {
 
 export default function Cadastro(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [nome, setNome] = useState('')
-  const [email, setEmail] = useState('')
-  const [telefone, setTelefone] = useState('')
-  const [senha, setSenha] = useState('')
+  const [vaga, setVaga] = useState('')
 
   const dados = props.route.params.Dados
   const token = props.route.params.Token
@@ -79,48 +77,34 @@ export default function Cadastro(props) {
             <ImageBackground source={carro} style={styles.icon} />
           </TouchableOpacity>
         </View>
-        <View style={styles.botv}>
-          <View style={styles.inputs}>
-            <TextInput
-              placeholder='Nome'
-              placeholderTextColor='#fbfbfb'
-              value={nome}
-              onChange={text => setNome(text)}
-              style={styles.inputText}
-            />
-          </View>
-          <View style={styles.inputs}>
-            <TextInput
-              placeholder='E-mail'
-              placeholderTextColor='#fbfbfb'
-              autoCompleteType='email'
-              value={email}
-              onChange={text => setEmail(text)}
-              style={styles.inputText}
-            />
-          </View>
-          <View style={styles.inputs}>
-            <TextInput
-              placeholder='senha'
-              placeholderTextColor='#fbfbfb'
-              keyboardType='numeric'
-              value={senha}
-              onChange={text => setSenha(text)}
-              style={styles.inputText}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.botao}
-            onPress={
-              () => {
-              }
-            }
-          >
-            <Text style={styles.botaoText}>
-              Cadastrar
-            </Text>
-          </TouchableOpacity>
+        
+        <View style={styles.vaga}>
+          <ImageBackground source={vagaBg} style={styles.bg}>
+            <View style={styles.inputVaga}>
+              <TextInput
+                placeholder='X00'
+                maxLength={3}
+                value={vaga}
+                placeholderTextColor='#fbfbfb'
+                onChangeText={text => setVaga(text)}
+                style={styles.inputTextVaga}
+              />
+            </View>
+          </ImageBackground>
         </View>
+        {/* Fim da Vaga inicio do Botao */}
+        <TouchableOpacity
+          style={styles.botao}
+          onPress={
+            () => {
+              props.navigation.navigate('UpdateVaga', { Usuario: dados, Token: token, Codigo: vaga })
+            }
+          }
+        >
+          <Text style={styles.botaoText}>
+            Salvar
+            </Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -133,17 +117,17 @@ const styles = StyleSheet.create({
     padding: 0,
     margin: 0,
   },
-  bg: {
-    width: '100%',
-    height: '100%',
+  vaga: {
+    marginTop: 60,
+    height: 360,
+    width: 270,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  vaga: {
-    marginTop: 60,
-    height: '100%',
+  bg: {
     width: '100%',
+    height: '100%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

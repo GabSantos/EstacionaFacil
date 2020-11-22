@@ -5,6 +5,7 @@ import LoadingLogin from './LoadingLogin'
 import UpdateUser from './UpdateUser'
 import UpdateCarro from './UpdateCarro'
 import UpdateFuncionario from './UpdateFuncionario'
+import UpdateVaga from './UpdateVaga'
 
 import Login from '../../pages/Login'
 import Cadastro from '../../pages/Cadastro'
@@ -28,7 +29,7 @@ const Stack = createStackNavigator()
 export default function StackFunc(props) {
   return (
 
-    <Stack.Navigator initialRouteName="MainFuncionario"
+    <Stack.Navigator initialRouteName="Inicial"
       screenOptions={{ headerShown: false }}>
 
       <Stack.Screen name="Inicial"
@@ -48,6 +49,8 @@ export default function StackFunc(props) {
         component={Vagas} />
       <Stack.Screen name="CadastroVaga"
         component={CadastroVaga} />
+      <Stack.Screen name="UpdateVaga"
+        component={UpdateVaga} />  
 
       <Stack.Screen name="InfoCliente"
         component={InfoCliente} />

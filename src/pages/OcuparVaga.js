@@ -16,13 +16,13 @@ const fetchFonts = () => {
     'Modak': require('../../assets/fonts/Modak-Regular.ttf')
   })
 }
-  
+
 
 export default function OcuparVaga(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vaga, setVaga] = useState("")
   const [modal, setModal] = useState(false)
-  const [dados, setDados] = useState({})
+  const [usuario, setUsuario] = useState({})
   const [carros, setCarros] = useState([])
 
   const token = props.route.params.Token
@@ -43,12 +43,10 @@ export default function OcuparVaga(props) {
       })
       .then((json) => {
         if (json.dados.tipo !== "C") {
-          props.navigation.navigate("MainFuncionario", { Dados: json.dados, Token: token })
+          props.navigation.navigate('MainFuncionario', { Usuario: json.dados, Token: token })
         }
-        setDados(json.dados)
-        console.log(dados)
-      }
-      )
+        setUsuario(json.dados)
+      })
       .catch((error) => {
         console.error(error)
       })
@@ -57,7 +55,7 @@ export default function OcuparVaga(props) {
 
   //#region Fetch Get Veiculos by user ID
   useEffect(() => {
-    fetch('http://192.168.15.11:8080/api/veiculo/cliente/' + dados.id, {
+    fetch('http://192.168.15.11:8080/api/veiculo/cliente/' + usuario.id, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -70,9 +68,7 @@ export default function OcuparVaga(props) {
       })
       .then((json) => {
         setCarros(json.dados)
-        console.log(carros)
-      }
-      )
+      })
       .catch((error) => {
         console.error(error)
       })
@@ -80,38 +76,29 @@ export default function OcuparVaga(props) {
   //#endregion
 
   //#region Carrega fontes externas
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
   //#endregion
 
   const renderItem = ({ item }) => {
-
     if (carros == null) {
       return (
         <View>
           <TouchableOpacity
-            onPress={
-              () => {
-                setModal(false) 
-                props.navigation.navigate('Veiculos', { Dados: dados, Token: token })
-              }
-            }
+            onPress={() => {
+                setModal(false)
+                props.navigation.navigate('Veiculos', { Usuario: usuario, Token: token })
+              }}
           >
             <ImageBackground source={carro} style={styles.bgCar}>
-              <Text style={styles.placa}>Você não possui nenhum veículo cadastrado</Text>
+              <Text style={styles.placa}>Você não possui nenhum veículo</Text>
             </ImageBackground>
           </TouchableOpacity>
         </View>
       )
     }
 
-    const dadosCarro = {
+    const objCarro = {
       "id": item.id,
       "marca": item.marca,
       "cor": item.cor,
@@ -122,12 +109,10 @@ export default function OcuparVaga(props) {
     return (
       <View>
         <TouchableOpacity
-          onPress={
-            () => {
+          onPress={() => {
               setModal(false)
-              props.navigation.navigate('DesocuparVaga', { Carro: dadosCarro, Usuario: dados, Token: token })
-            }
-          }
+              props.navigation.navigate('DesocuparVaga', { Carro: objCarro, Usuario: usuario, Token: token })
+            }}
         >
           <ImageBackground source={carro} style={styles.bgCar}>
             <Text style={styles.placa}>{item.placa}</Text>
@@ -143,10 +128,15 @@ export default function OcuparVaga(props) {
 
   return (
     // Inicio View Geral container
+
     <View style={styles.container}>
+
       {/* Inicio View principal */}
+
       <ImageBackground source={background} style={styles.bg}>
+
         {/* Inicio da Header */}
+
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.botoesHeader}
@@ -159,7 +149,9 @@ export default function OcuparVaga(props) {
             <ImageBackground source={user} style={styles.user} />
           </TouchableOpacity>
         </View>
+
         {/* Fim da Header Inicio da Modal */}
+
         <Modal
           animationType="slide"
           transparent={true}
@@ -172,32 +164,34 @@ export default function OcuparVaga(props) {
             style={styles.modalContainer}
             activeOpacity={1}
             onPressOut={() => { setModal(false) }}
-          > 
-              <TouchableWithoutFeedback>
-                <View style={styles.modal}>
-                  <SafeAreaView style={styles.carList}>
-                    <FlatList
-                      horizontal
-                      showsHorizontalScrollIndicator={false}
-                      data={carros}
-                      renderItem={renderItem}
-                      keyExtractor={(item) => item.id}
-                      style={styles.flatList}
-                    />
+          >
+            <TouchableWithoutFeedback>
+              <View style={styles.modal}>
+                <SafeAreaView style={styles.carList}>
+                  <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={carros}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                    style={styles.flatList}
+                  />
 
 
-                  </SafeAreaView>
-                </View>
-              </TouchableWithoutFeedback>
+                </SafeAreaView>
+              </View>
+            </TouchableWithoutFeedback>
           </TouchableOpacity>
         </Modal>
+
         {/* Fim da Modal inicio da Vaga */}
+
         <View style={styles.vaga}>
           <ImageBackground source={vagaBg} style={styles.bg}>
             <View style={styles.inputVaga}>
               <TextInput
-                placeholder='0000'
-                maxLength={4}
+                placeholder='X00'
+                maxLength={3}
                 placeholderTextColor='#fbfbfb'
                 onChange={text => setVaga(text)}
                 style={styles.inputTextVaga}
@@ -205,7 +199,9 @@ export default function OcuparVaga(props) {
             </View>
           </ImageBackground>
         </View>
+
         {/* Fim da Vaga inicio do Botao */}
+
         <TouchableOpacity
           style={styles.botao}
           onPress={

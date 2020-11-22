@@ -73,11 +73,8 @@ export default function Vagas(props) {
 
     const objVaga = {
       "id": item.id,
-      "nome": item.nome,
-      "email": item.email,
-      "telefone": item.telefone,
-      "senha": item.senha,
-      "usuarioId": item.usuarioId
+      "codVaga": item.codVaga,
+      "disponivel": item.disponivel,
     }
     return (
       <View>
@@ -101,9 +98,7 @@ export default function Vagas(props) {
   }
 
   return (
-    // Inicio View Geral container
     <View style={styles.container}>
-      {/* Inicio View principal */}
       <ImageBackground source={background} style={styles.bg}>
         <View style={styles.header}>
           <TouchableOpacity
@@ -142,7 +137,6 @@ export default function Vagas(props) {
             <ImageBackground source={carro} style={styles.icon} />
           </TouchableOpacity>
         </View>
-        {/* Fim da Modal inicio da Vaga */}
         <SafeAreaView style={styles.funcList}>
           <FlatList
             showsHorizontalScrollIndicator={false}
@@ -154,24 +148,9 @@ export default function Vagas(props) {
 
 
         </SafeAreaView>
-        {/* Fim da Vaga inicio do Botao */}
-        <TouchableOpacity
-          style={styles.botao}
-          onPress={
-            () => {
-
-            }
-          }
-        >
-          <Text style={styles.botaoText}>
-            Estacionar
-            </Text>
-        </TouchableOpacity>
-        {/* Fim do Botao */}
+       
       </ImageBackground>
-      {/* Fim view principal */}
     </View>
-    // Fim View Geral container
   );
 }
 
@@ -186,8 +165,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   vaga: {
     marginTop: 60,

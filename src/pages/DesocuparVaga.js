@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Text, Alert, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
+import React, { useState } from 'react'
+import { Text, View, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 
@@ -16,7 +16,7 @@ const fetchFonts = () => {
   })
 }
 
-
+/////////////// não feito ainda
 export default function OcuparVaga(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [modal, setModal] = useState(false)

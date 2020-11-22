@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Text, Alert } from 'react-native'
 
 
 
-const Loading = (props) => {
-  const [token, setToken] = useState('')
-  const [data, setData] = useState({})
+const LoadingLogin = (props) => {
 
-  const email = props.route.params.emailCliente
-  const nome = props.route.params.nomeCliente
-  const senha = props.route.params.senhaCliente
-  const telefone = props.route.params.telefoneCliente
+  const email = props.route.params.Email
+  const nome = props.route.params.Nome
+  const senha = props.route.params.Senha
+  const telefone = props.route.params.Telefone
 
   if (props.route.params.login) {
     useEffect(() => {
@@ -31,12 +29,11 @@ const Loading = (props) => {
         .then((json) => {
           if (json.dados === null) {
             Alert.alert("Email e/ou senha incorreto(s)");
-              props.navigation.goBack()
+            props.navigation.goBack()
           } else {
-            props.navigation.navigate("OcuparVaga", { Email: email, Token: json.dados.token })
+            props.navigation.navigate('OcuparVaga', { Email: email, Token: json.dados.token })
           }
-        }
-        )
+        })
         .catch((error) => {
           console.error(error)
         })
@@ -69,14 +66,13 @@ const Loading = (props) => {
             Alert.alert('Cadastro realizado com sucesso');
             props.navigation.navigate('Login')
           }
-        }
-        )
+        })
         .catch((error) => {
           console.error(error)
-        }).then(() => { })
+        })
     }, []);
   }
-  return <Text>0</Text>
+  return <Text>Carregando</Text>
 }
 
-export default Loading
+export default LoadingLogin
