@@ -15,15 +15,13 @@ const fetchFonts = () => {
 }
 
 export default function Login(props) {
+  const [dataLoaded, setDataLoaded] = useState(false)
   const [email, setEmail] = useState("")
   const [senha, setSenha] = useState("")
 
   // Carrega fontes externas
-  const [dataLoaded, setDataLoaded] = useState(false)
   if (!dataLoaded)
-    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
-
-
+    return <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
   return (
 

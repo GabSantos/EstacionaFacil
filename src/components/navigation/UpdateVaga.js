@@ -36,7 +36,7 @@ const UpdateFuncionario = (props) => {
             props.navigation.goBack()
           } else {
             Alert.alert('Alteração realizada com sucesso');
-            props.navigation.navigate('MainFuncionario', { Dados: dados, Token: token })
+            props.navigation.navigate('MainFuncionario', { Usuario: usuario, Token: token })
           }
         }
         )

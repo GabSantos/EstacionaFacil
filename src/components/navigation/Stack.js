@@ -6,6 +6,11 @@ import UpdateUser from './UpdateUser'
 import UpdateCarro from './UpdateCarro'
 import UpdateFuncionario from './UpdateFuncionario'
 import UpdateVaga from './UpdateVaga'
+import EstacionaVaga from './EstacionaVaga'
+import GeraValor from './GeraValor'
+
+import GetUsuario from '../GetUsuario'
+import GetCarros from '../GetCarros'
 
 import Login from '../../pages/Login'
 import Cadastro from '../../pages/Cadastro'
@@ -23,6 +28,7 @@ import Funcionarios from '../../pages/Funcionarios'
 import EditFuncionario from '../../pages/EditFuncionario'
 import Vagas from '../../pages/Vagas'
 import CadastroVaga from '../../pages/CadastroVaga'
+import AguardaPagamento from '../../pages/AguardaPagamento'
 
 const Stack = createStackNavigator()
 
@@ -40,17 +46,27 @@ export default function StackFunc(props) {
         component={Cadastro} />
       <Stack.Screen name="LoadingLogin"
         component={LoadingLogin} />
+      <Stack.Screen name="GetUsuario"
+        component={GetUsuario} />
+      <Stack.Screen name="GetCarros"
+        component={GetCarros} />
 
+      <Stack.Screen name="GeraValor"
+        component={GeraValor} />
       <Stack.Screen name="OcuparVaga"
         component={OcuparVaga} />
       <Stack.Screen name="DesocuparVaga"
         component={DesocuparVaga} />
+      <Stack.Screen name="EstacionaVaga"
+        component={EstacionaVaga} />
       <Stack.Screen name="Vagas"
         component={Vagas} />
       <Stack.Screen name="CadastroVaga"
         component={CadastroVaga} />
       <Stack.Screen name="UpdateVaga"
-        component={UpdateVaga} />  
+        component={UpdateVaga} />
+      <Stack.Screen name="AguardaPagamento"
+        component={AguardaPagamento} />
 
       <Stack.Screen name="InfoCliente"
         component={InfoCliente} />

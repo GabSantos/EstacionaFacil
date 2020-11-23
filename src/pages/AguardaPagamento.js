@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, Alert, View, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, ImageBackground, Modal, FlatList } from 'react-native'
+import { Text, View, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, ImageBackground, Modal, FlatList } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 
@@ -16,11 +16,9 @@ const fetchFonts = () => {
   })
 }
 
-
-
-export default function DesocuparVaga(props) {
+export default function AguardaPagamento(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [modal, setModal] = useState(false)
+  const [valor, setValor] = useState('')
 
   const carro = props.route.params.Carro
   const usuario = props.route.params.Usuario
@@ -29,6 +27,10 @@ export default function DesocuparVaga(props) {
 
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
+
+  if (vaga.paga == 'true') {
+    props.navigation.navigate('OcuparVaga', { Email: usuario.email, Token: token })
+  }
 
   return (
     <View style={styles.container}>
@@ -43,37 +45,16 @@ export default function DesocuparVaga(props) {
             <ImageBackground source={user} style={styles.user} />
           </TouchableOpacity>
         </View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modal}
-          onRequestClose={() => {
-            //props.navigation.navigate("")
-          }}
-        >
-          <TouchableOpacity
-            style={styles.modalContainer}
-            activeOpacity={1}
-            onPressOut={() => { setModal(false) }}
-          >
-            <TouchableWithoutFeedback>
-              <View style={styles.modal}>
-                <Text></Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </TouchableOpacity>
-        </Modal>
+
         <View style={styles.vaga}>
-          <ImageBackground source={vagaBg} style={styles.bg}>
-              <ImageBackground source={carrobg} style={styles.bgCar}>
-                <Text style={styles.placa}>{carro.placa}</Text>
-              </ImageBackground>
-          </ImageBackground>
+          <Text>{'R$' + valor}</Text>
+          <Text>Dirija-se ao caixa para realizar o pagamento</Text>
         </View>
+
         <TouchableOpacity
           style={styles.botao}
           onPress={() => {
-            props.navigation.navigate('GeraValor', {
+            props.navigation.navigate('AguardaPagamento', {
               Usuario: usuario,
               Token: token,
               Vaga: vaga,
@@ -82,7 +63,7 @@ export default function DesocuparVaga(props) {
           }}
         >
           <Text style={styles.botaoText}>
-            Desocupar
+            Pago!
           </Text>
         </TouchableOpacity>
       </ImageBackground>

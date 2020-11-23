@@ -16,7 +16,7 @@ export default function App(props) {
   // Carrega fontes externas
   const [dataLoaded, setDataLoaded] = useState(false)
   if (!dataLoaded)
-    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
+    return <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
   return (
 

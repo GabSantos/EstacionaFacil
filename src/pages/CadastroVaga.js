@@ -33,10 +33,6 @@ export default function Cadastro(props) {
     )
   }
 
-
-
-
-
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>

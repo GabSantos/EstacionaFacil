@@ -25,9 +25,6 @@ export default function EditVeiculo(props) {
   const [placa, setPlaca] = useState(carro.placa)
   const [tipo, setTipo] = useState(carro.tipo)
 
-
-
-
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
