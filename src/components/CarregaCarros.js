@@ -22,10 +22,11 @@ const CarregaCarros = (props) => {
       return response.json()
     })
     .then((json) => {
+      const carros = json.dados //!= null ? json.dados : [{"id": "fim", "marca": "s", "cor": "s", "placa": "Add Carro", "tipo": "a", "usuarioId": "adm"}]
       props.navigation.navigate('CheckVagaOcupada', {
         Usuario: usuario,
         Token: token,
-        Carros: json.dados
+        Carros: carros
       })
     })
     .catch((error) => {

@@ -23,6 +23,8 @@ export default function InfoCliente(props) {
   const token = props.route.params.Token
   const carros = props.route.params.Carros
 
+  const arr = carros == null ? [] : carros
+
   const fim = {
     "id": "fim",
     "marca": "s",
@@ -36,13 +38,13 @@ export default function InfoCliente(props) {
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
-  carros.forEach(element => {
+  arr.forEach(element => {
     if (element.id == 'fim') {
       setTemFim(true)
     }
   })
   if(!temFim)
-    carros.push(fim)
+    arr.push(fim)
   const renderItem = ({ item }) => {
     if (item.id === 'fim') {
       return (
@@ -101,7 +103,7 @@ export default function InfoCliente(props) {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={carros}
+            data={arr}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             style={styles.flatList}

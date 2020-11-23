@@ -78,6 +78,7 @@ export default function EditVeiculo(props) {
               selectedValue={tipo}
               onValueChange={itemValue => { setTipo(itemValue) }}
             >
+              <Picker.Item label="" value="" />
               <Picker.Item label="Carro" value="C" />
               <Picker.Item label="Moto" value="M" />
             </Picker>
