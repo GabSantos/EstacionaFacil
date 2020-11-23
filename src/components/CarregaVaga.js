@@ -9,6 +9,7 @@ const CarregaCarros = (props) => {
   const token = props.route.params.Token
   const carro = props.route.params.Carro
   const codVaga = props.route.params.CodVaga
+  
 
   const url = 'http://192.168.15.11:8080/api/vaga/todas'
 

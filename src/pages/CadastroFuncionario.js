@@ -8,7 +8,6 @@ import voltar from '../../assets/icons/voltar.png'
 import estaciona from '../../assets/icons/estaciona.png'
 import users from '../../assets/icons/users.png'
 import carro from '../../assets/icons/carro.png'
-import redondo from '../../assets/icons/redondo.png'
 
 const fetchFonts = () => {
   return loadAsync({
@@ -24,6 +23,9 @@ export default function Cadastro(props) {
   const [telefone, setTelefone] = useState('')
   const [senha, setSenha] = useState('')
 
+  const usuario = props.route.params.Usuario
+  const token = props.route.params.Token
+  
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 

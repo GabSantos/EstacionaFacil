@@ -22,9 +22,11 @@ const fetchFonts = () => {
 
 export default function MainFuncionario(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [vagasOcupadas, setVagasOcupadas] = useState([])
-  const [vagas, setVagas] = useState([])
-  const [objVaga, setObjVaga] = useState({})
+
+  const usuario = props.route.params.Usuario
+  const token = props.route.params.Token
+  const vagas = props.route.params.Vagas
+  const vagasOcupadas = props.route.params.VagasOcupadas
 
   if (!dataLoaded) {
     return (
@@ -34,6 +36,8 @@ export default function MainFuncionario(props) {
       />
     )
   }
+
+
 
   let cont = 1
   const renderItem = ({ item }) => {
@@ -46,15 +50,10 @@ export default function MainFuncionario(props) {
       cont++
     }
 
-
-    vagas.forEach(element => {
-      if (item.vaga == element.id) {
-        setObjVaga({
-          "id": element.id,
-          "codVaga": element.codVaga,
-          "disponivel": element.disponivel
-        })
-      }
+    let objVaga
+    vagas.forEach(vaga => {
+      if (vaga.id == item.vaga)
+        objVaga = vaga
     });
 
     const objVagaOcupada = {
@@ -68,26 +67,35 @@ export default function MainFuncionario(props) {
     }
 
     const status = objVagaOcupada.horaSaida ? "Aguardando pagamento" : "Ocupado"
-    const horario = objVagaOcupada.horaSaida ? "R$" + objVagaOcupada.valor : run(objVagaOcupada.horaEntrada)
+    const horario = objVagaOcupada.horaSaida ? "R$" + objVagaOcupada.valor : objVagaOcupada.horaEntrada.slice(11)
 
-    return (
-      <View>
-        <TouchableOpacity
-          onPress={() => {
-            //props.navigation.navigate('ConfirmaPagamento', { Vaga: objVaga, Usuario: usuario, Token: token })
-          }}
-        >
+    if (objVagaOcupada.horaSaida) {
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('ConfirmaPagamento', { Vaga: objVagaOcupada, Usuario: usuario, Token: token })
+            }}
+          >
+            <ImageBackground source={bgList} style={styles.funcionarioContainer}>
+              <Text style={styles.codVaga}>{objVaga.codVaga}</Text>
+              <Text style={styles.status}>{status}</Text>
+              <Text style={styles.preco}>{horario}</Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+      )
+    } else {
+      return (
+        <View>
           <ImageBackground source={bgList} style={styles.funcionarioContainer}>
             <Text style={styles.codVaga}>{objVaga.codVaga}</Text>
             <Text style={styles.status}>{status}</Text>
-            <Text style={styles.status}>{status}</Text>
+            <Text style={styles.preco}>{horario}</Text>
           </ImageBackground>
-        </TouchableOpacity>
-      </View>
-
-    )
-
-
+        </View>
+      )
+    }
 
   }
 
@@ -99,7 +107,7 @@ export default function MainFuncionario(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroFuncionario", { Dados: dados, Token: token })
+              props.navigation.navigate("CadastroFuncionario", { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={user} style={styles.icon} />
@@ -108,7 +116,7 @@ export default function MainFuncionario(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("Funcionarios", { Dados: dados, Token: token }) // Listar todos funcionarios
+              props.navigation.navigate("Funcionarios", { Usuario: usuario, Token: token }) // Listar todos funcionarios
             }}
           >
             <ImageBackground source={users} style={styles.icon} />
@@ -117,7 +125,7 @@ export default function MainFuncionario(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("Vagas", { Dados: dados, Token: token }) //Listar todas vagas
+              props.navigation.navigate("Vagas", { Usuario: usuario, Token: token }) //Listar todas vagas
             }}
           >
             <ImageBackground source={estaciona} style={styles.icon} />
@@ -126,7 +134,7 @@ export default function MainFuncionario(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
+              props.navigation.navigate("CadastroVaga", { Usuario: usuario, Token: token }) // Cadastrar nova vaga
             }}
           >
             <ImageBackground source={carro} style={styles.icon} />
@@ -160,7 +168,6 @@ const styles = StyleSheet.create({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   vaga: {
     marginTop: 60,
@@ -271,4 +278,36 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto'
   },
+  status: {
+    textAlign: 'center',
+    marginRight: 17,
+    fontSize: 20,
+    fontFamily: 'Stardos',
+    color: '#fbfbfb',
+  },
+  preco: {
+    position: 'absolute',
+    right: 13,
+    textAlign: 'center',
+    margin: 5,
+    fontSize: 22,
+    fontFamily: 'Stardos',
+    color: '#fbfbfb',
+  },
+  codVaga: {
+    position: 'absolute',
+    left: 13,
+    textAlign: 'center',
+    margin: 5,
+    fontSize: 22,
+    fontFamily: 'Stardos',
+    color: '#fbfbfb',
+  },
+  funcionarioContainer: {
+    width: '100%',
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  }
 })

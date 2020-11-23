@@ -24,7 +24,7 @@ const CheckUserStatus = (props) => {
       })
       .then((json) => {
         if (json.dados.tipo != 'C') {
-          props.navigation.navigate('MainFuncionario', { Usuario: json.dados, Token: token })
+          props.navigation.navigate('CarregaVagas', { Usuario: json.dados, Token: token })
         } else {
           props.navigation.navigate('CarregaCarros', { Usuario: json.dados, Token: token })
         }

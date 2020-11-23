@@ -7,8 +7,8 @@ const UpdateFuncionario = (props) => {
 
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token
-  const codigo = props.route.params.Codigo
   const vaga = props.route.params.Vaga
+  const codigo = props.route.params.Codigo
 
   if (vaga != null) {
     useEffect(() => {

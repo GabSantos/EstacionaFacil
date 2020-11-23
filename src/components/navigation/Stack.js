@@ -14,6 +14,9 @@ import CheckVagaOcupada from '../CheckVagaOcupada'
 import CarregaCarros from '../CarregaCarros'
 import CarregaVaga from '../CarregaVaga'
 import CheckPagamento from '../CheckPagamento'
+import CarregaVagas from '../CarregaVagas'
+import CarregaVagasOcupadas from '../CarregaVagasOcupadas'
+import ConfirmaPagamento from '../ConfirmaPagamento'
 
 import Login from '../../pages/Login'
 import Cadastro from '../../pages/Cadastro'
@@ -58,8 +61,10 @@ export default function StackFunc(props) {
 
       <Stack.Screen name="GeraValor"
         component={GeraValor} />
-        <Stack.Screen name="CheckPagamento"
+      <Stack.Screen name="CheckPagamento"
         component={CheckPagamento} />
+      <Stack.Screen name="ConfirmaPagamento"
+        component={ConfirmaPagamento} />
       <Stack.Screen name="OcuparVaga"
         component={OcuparVaga} />
       <Stack.Screen name="DesocuparVaga"
@@ -76,6 +81,10 @@ export default function StackFunc(props) {
         component={UpdateVaga} />
       <Stack.Screen name="AguardaPagamento"
         component={AguardaPagamento} />
+      <Stack.Screen name="CarregaVagas"
+        component={CarregaVagas} />
+      <Stack.Screen name="CarregaVagasOcupadas"
+        component={CarregaVagasOcupadas} />
 
       <Stack.Screen name="InfoCliente"
         component={InfoCliente} />

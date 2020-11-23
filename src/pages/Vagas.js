@@ -25,6 +25,30 @@ export default function Vagas(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vagas, setVagas] = useState([])
 
+
+  const usuario = props.route.params.Usuario
+  const token = props.route.params.Token
+
+  const url = 'http://192.168.15.11:8080/api/vaga/todas'
+
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': token
+    }
+  })
+    .then((response) => {
+      return response.json()
+    })
+    .then((json) => {
+      setVagas(json.dados)
+    })
+    .catch((error) => {
+      console.error(error)
+    })
+
   if (!dataLoaded) {
     return (
       <AppLoading
@@ -50,25 +74,32 @@ export default function Vagas(props) {
       "codVaga": item.codVaga,
       "disponivel": item.disponivel,
     }
-    return (
-      <View>
-        <TouchableOpacity
-          onPress={
-            () => {
-              props.navigation.navigate('UpdateVaga', { Vaga: objVaga, Usuario: dados, Token: token })
-            }
-          }
-        >
+
+    if (objVaga.disponivel == 'true') {
+      return (
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('EditVaga', { Vaga: objVaga, Usuario: usuario, Token: token  })
+            }}
+          >
+            <ImageBackground source={bgList} style={styles.funcionarioContainer}>
+              <Text style={styles.nome}>{item.codVaga}</Text>
+              <Text style={styles.nome}>Livre</Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+      )
+    } else {
+      return (
+        <View>
           <ImageBackground source={bgList} style={styles.funcionarioContainer}>
             <Text style={styles.nome}>{item.codVaga}</Text>
+            <Text style={styles.nome}>Ocupado</Text>
           </ImageBackground>
-        </TouchableOpacity>
-      </View>
-
-    )
-
-
-
+        </View>
+      )
+    }
   }
 
   return (
@@ -78,7 +109,7 @@ export default function Vagas(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("MainFuncionario", { Dados: dados, Token: token })
+              props.navigation.navigate("MainFuncionario", { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={voltar} style={styles.icon} />
@@ -87,7 +118,7 @@ export default function Vagas(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroFuncionario", { Dados: dados, Token: token })
+              props.navigation.navigate("CadastroFuncionario", { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={user} style={styles.icon} />
@@ -96,7 +127,7 @@ export default function Vagas(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("Funcionarios", { Dados: dados, Token: token }) // Listar todos funcionarios
+              props.navigation.navigate("Funcionarios", { Usuario: usuario, Token: token }) // Listar todos funcionarios
             }}
           >
             <ImageBackground source={users} style={styles.icon} />
@@ -105,7 +136,7 @@ export default function Vagas(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
+              props.navigation.navigate("CadastroVaga", { Usuario: usuario, Token: token }) // Cadastrar nova vaga
             }}
           >
             <ImageBackground source={carro} style={styles.icon} />
@@ -122,7 +153,7 @@ export default function Vagas(props) {
 
 
         </SafeAreaView>
-       
+
       </ImageBackground>
     </View>
   );
@@ -245,7 +276,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 60,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row'
   },
   flatList: {
     marginTop: 60,
@@ -257,12 +289,10 @@ const styles = StyleSheet.create({
     height: 'auto'
   },
   nome: {
-    height: '100%',
-    width: '100%',
-    fontSize: 25,
     textAlign: 'center',
-    fontFamily: 'Modak',
+    marginRight: 17,
+    fontSize: 24,
+    fontFamily: 'Stardos',
     color: '#fbfbfb',
-    textAlignVertical: 'center'
   }
 })

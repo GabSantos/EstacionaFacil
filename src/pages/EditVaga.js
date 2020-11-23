@@ -18,11 +18,12 @@ const fetchFonts = () => {
 }
 
 export default function Cadastro(props) {
-  const [dataLoaded, setDataLoaded] = useState(false)
-  const [vaga, setVaga] = useState('')
-
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token
+  const vaga = props.route.params.Vaga
+
+  const [dataLoaded, setDataLoaded] = useState(false)
+  const [codVaga, setCodVaga] = useState(vaga.codVaga)
 
   if (!dataLoaded) {
     return (
@@ -40,7 +41,7 @@ export default function Cadastro(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("MainFuncionario", { Usuario: usuario, Token: token })
+              props.navigation.navigate("MainFuncionario", { Dados: dados, Token: token })
             }}
           >
             <ImageBackground source={voltar} style={styles.icon} />
@@ -49,7 +50,7 @@ export default function Cadastro(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("Funcionarios", { Usuario: usuario, Token: token }) // Listar todos funcionarios
+              props.navigation.navigate("Funcionarios", { Dados: dados, Token: token }) // Listar todos funcionarios
             }}
           >
             <ImageBackground source={users} style={styles.icon} />
@@ -58,7 +59,7 @@ export default function Cadastro(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("Vagas", { Usuario: usuario, Token: token }) //Listar todas vagas
+              props.navigation.navigate("Vagas", { Dados: dados, Token: token }) //Listar todas vagas
             }}
           >
             <ImageBackground source={estaciona} style={styles.icon} />
@@ -67,7 +68,7 @@ export default function Cadastro(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate("CadastroFuncionario", { Usuario: usuario, Token: token }) // Cadastrar nova vaga
+              props.navigation.navigate("AddVaga", { Dados: dados, Token: token }) // Cadastrar nova vaga
             }}
           >
             <ImageBackground source={carro} style={styles.icon} />
@@ -80,9 +81,9 @@ export default function Cadastro(props) {
               <TextInput
                 placeholder='X00'
                 maxLength={3}
-                value={vaga}
+                value={codVaga}
                 placeholderTextColor='#fbfbfb'
-                onChangeText={text => setVaga(text)}
+                onChangeText={text => setCodVaga(text)}
                 style={styles.inputTextVaga}
               />
             </View>
@@ -92,7 +93,7 @@ export default function Cadastro(props) {
         <TouchableOpacity
           style={styles.botao}
           onPress={() => {
-              props.navigation.navigate('UpdateVaga', { Usuario: usuario, Token: token, Codigo: vaga })
+              props.navigation.navigate('UpdateVaga', { Usuario: usuario, Token: token, Vaga: vaga, Codigo: codVaga })
             }}
         >
           <Text style={styles.botaoText}>

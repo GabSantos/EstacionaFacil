@@ -24,6 +24,8 @@ export default function Cadastro(props) {
   const [telefone, setTelefone] = useState(funcionario.telefone)
   const [senha, setSenha] = useState('')
 
+  const usuario = props.route.params.Usuario
+  const token = props.route.params.Token
 
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
@@ -43,7 +45,7 @@ export default function Cadastro(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate('Vagas')
+              props.navigation.navigate('Vagas', { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={estaciona} style={styles.icon} />
