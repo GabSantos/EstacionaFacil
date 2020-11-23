@@ -24,9 +24,6 @@ export default function Cadastro(props) {
   const [telefone, setTelefone] = useState('')
   const [senha, setSenha] = useState('')
 
-  const usuario = props.route.params.Usuario
-  const token = props.route.params.Token
-
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { Picker } from '@react-native-picker/picker'
 
 import background from '../../assets/fundoinfocliente.png'
 import estaciona from '../../assets/icons/estaciona.png'
@@ -12,110 +13,95 @@ const fetchFonts = () => {
     'Modak': require('../../assets/fonts/Modak-Regular.ttf')
   })
 }
-///////////////////////////// ainda não feito
-export default function CadastroVeiculo(props) {
-  const dados = props.route.params.Dados
-  const token = props.route.params.Token
+
+export default function EditVeiculo(props) {
 
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [nome, setNome] = useState(dados.nome)
-  const [email, setEmail] = useState(dados.email)
-  const [telefone, setTelefone] = useState(dados.telefone)
-  const [senha, setSenha] = useState('')
+  const [marca, setMarca] = useState('')
+  const [cor, setCor] = useState('')
+  const [placa, setPlaca] = useState('')
+  const [tipo, setTipo] = useState('')
 
+  const usuario = props.route.params.Usuario
+  const token = props.route.params.Token
+  const carros = props.route.params.Carros
 
-  
-  
-  if (!dataLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => setDataLoaded(true)}
-      />
-    )
-  }
+  if (!dataLoaded)
+    <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
   return (
-    // Inicio View Geral container
     <View style={styles.container}>
-      {/* Inicio View principal */}
       <ImageBackground source={background} style={styles.bg}>
-        {/* Inicio da Header */}
         <View style={styles.header}>
           <TouchableOpacity
             style={styles.botoesHeader}
-            onPress={
-              () => {
-                props.navigation.goBack()
-              }
-            }
+            onPress={() => {
+              props.navigation.navigate('OcuparVaga', { Usuario: usuario, Token: token, Carros: carros })
+            }}
           >
             <ImageBackground source={estaciona} style={styles.user} />
           </TouchableOpacity>
         </View>
         <Text style={styles.text}>
-          {dados.nome}
+          {usuario.nome}
         </Text>
         <View style={styles.infoContainer}>
           <View style={styles.inputs}>
             <TextInput
-              placeholder='nome'
-              value={nome}
+              placeholder='Marca'
+              value={marca}
               placeholderTextColor='#fbfbfb'
-              onChangeText={text => setNome(text)}
+              onChangeText={text => setMarca(text)}
               style={styles.inputText}
             />
           </View>
           <View style={styles.inputs}>
             <TextInput
-              placeholder='email'
-              value={email}
+              placeholder='cor'
+              value={cor}
               placeholderTextColor='#fbfbfb'
-              onChangeText={text => setEmail(text)}
+              onChangeText={text => setCor(text)}
               style={styles.inputText}
             />
           </View>
           <View style={styles.inputs}>
             <TextInput
-              placeholder='telefone'
-              value={telefone}
+              placeholder='Placa'
+              value={placa}
               placeholderTextColor='#fbfbfb'
-              onChangeText={text => setTelefone(text)}
+              onChangeText={text => setPlaca(text)}
               style={styles.inputText}
             />
           </View>
           <View style={styles.inputs}>
-            <TextInput
-              placeholder='senha'
-              value={senha}
-              placeholderTextColor='#fbfbfb'
-              secureTextEntry={true}
-              onChangeText={text => setSenha(text)}
-              style={styles.inputText}
-            />
+            <Picker
+              selectedValue={tipo}
+              onValueChange={itemValue => { setTipo(itemValue) }}
+            >
+              <Picker.Item label="Carro" value="C" />
+              <Picker.Item label="Moto" value="M" />
+            </Picker>
           </View>
           <TouchableOpacity
             style={styles.botao}
             onPress={() => {
-              props.navigation.navigate('UpdateUser', { Dados: dados, Token: token, Email: email, Nome: nome, Telefone: telefone, Senha: senha})
-            }
-            }
+              props.navigation.navigate('UpdateCarro', {
+                Usuario: usuario,
+                Token: token,
+                Marca: marca,
+                Cor: cor,
+                Placa: placa,
+                Tipo: tipo
+              })
+            }}
           >
             <Text style={styles.botaoText}>
               Salvar
             </Text>
           </TouchableOpacity>
-          {/* Fim do Botao */}
         </View>
-
-
-
-
-
       </ImageBackground>
-      {/* Fim view principal */}
     </View>
-    // Fim View Geral container
   );
 }
 
@@ -132,25 +118,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  vaga: {
-    marginTop: 60,
-    height: 360,
-    width: 270,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  estaciona: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    color: '#FBFBFB'
-  },
-  facil: {
-    fontFamily: 'Stardos',
-    fontSize: 60,
-    marginLeft: 150,
-    color: '#FBFBFB'
   },
   inputs: {
     height: 34,
@@ -180,22 +147,6 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#0085FF',
     marginTop: 5
-  },
-  inputTextVaga: {
-    height: '100%',
-    width: '100%',
-    fontSize: 70,
-    textAlign: 'center',
-    fontFamily: 'Stardos',
-    color: '#fbfbfb',
-  },
-  inputVaga: {
-    height: 100,
-    width: 190,
-    borderColor: '#FFD600',
-    borderBottomWidth: 10,
-    justifyContent: 'center',
-    margin: 20
   },
   user: {
     height: '100%',

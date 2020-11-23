@@ -20,117 +20,15 @@ export default function OcuparVaga(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vaga, setVaga] = useState('')
   const [modal, setModal] = useState(false)
-  const [usuario, setUsuario] = useState({})
-  const [carros, setCarros] = useState([])
 
+  const usuario = props.route.params.Usuario
   const token = props.route.params.Token
-  const email = props.route.params.Email
- 
-  //#region Fetch Get User info by email
-  useEffect(() => {
-    fetch('http://192.168.15.11:8080/api/usuario/' + email, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        const user = json.dados
-        if (user.tipo !== "C") {
-          props.navigation.navigate('MainFuncionario', { Usuario: user, Token: token })
-        }
-        setUsuario(user)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  }, []);
-  //#endregion
+  const carros = props.route.params.Carros
 
-  //#region Fetch Get Veiculos by user ID
-    fetch('http://192.168.15.11:8080/api/veiculo/cliente/' + usuario.id, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        const cars = json.dados
-        setCarros(cars)
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  //#endregion
-
-  //#region Checa se usuario esta estacionado
-    fetch('http://192.168.15.11:8080/api/vagaOcupada/VagasOcupadasNaoPagas', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1AZW1haWwuY29tIiwicm9sZSI6IlJPTEVfRlVOQyIsImNyZWF0ZWQiOjE2MDU4OTI0Nzg4MzAsImV4cCI6MTYwNjQ5NzI3OH0.hr83_tQP963QQRxQpJWVXWhZ-pgIvo3AkO0yVlETsZfBbheaxcccM7FfGWIcytNNNFGa5m0j0I7Vcbp7rSHXaw'//token
-      },
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        const vagasOcupadas = json.dados
-        console.log(vagasOcupadas)
-        if (vagasOcupadas != null) {
-          vagasOcupadas.forEach(vaga => {
-            carros.forEach(veiculo => {
-              if (vaga.veiculo == veiculo.id) {
-                props.navigation.navigate('DesocuparVaga', {
-                  Usuario: usuario,
-                  Token: token,
-                  Vaga: vaga,
-                  Carro: veiculo
-                })
-              }
-            });
-          });
-        }
-      })
-      .catch((error) => {
-        console.error(error)
-      })
-  //#endregion
-
-  //#region Carrega fontes externas
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
-  //#endregion
 
   const renderItem = ({ item }) => {
-    if (carros == null) {
-      return (
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              setModal(false)
-              props.navigation.navigate('Veiculos', { Usuario: usuario, Token: token })
-            }}
-          >
-            <ImageBackground source={carro} style={styles.bgCar}>
-              <Text style={styles.placa}>Você não possui nenhum veículo</Text>
-            </ImageBackground>
-          </TouchableOpacity>
-        </View>
-      )
-    }
- 
     const objCarro = {
       "id": item.id,
       "marca": item.marca,
@@ -140,11 +38,11 @@ export default function OcuparVaga(props) {
       "usuarioId": item.usuarioId
     }
     return (
-      <View>
+      <View> 
         <TouchableOpacity
           onPress={() => {
             setModal(false)
-            props.navigation.navigate('EstacionaVaga', {
+            props.navigation.navigate('CarregaVaga', {
               Carro: objCarro,
               Usuario: usuario,
               Token: token,
@@ -173,7 +71,7 @@ export default function OcuparVaga(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate('InfoCliente', { Usuario: usuario, Token: token })
+              props.navigation.navigate('InfoCliente', { Usuario: usuario, Token: token, Carros: carros })
             }}
           >
             <ImageBackground source={user} style={styles.user} />

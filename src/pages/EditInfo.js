@@ -14,14 +14,16 @@ const fetchFonts = () => {
 }
 
 export default function EditInfo(props) {
+
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token
+  const carros = props.route.params.Carros
 
   const [dataLoaded, setDataLoaded] = useState(false)
   const [nome, setNome] = useState(usuario.nome)
   const [email, setEmail] = useState(usuario.email)
-  const [telefone, setTelefone] = useState(usuario.telefone)
   const [senha, setSenha] = useState('')
+  const [telefone, setTelefone] = useState(usuario.telefone)
 
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
@@ -33,7 +35,7 @@ export default function EditInfo(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate('OcuparVaga', { Email: usuario.email, Token: token })
+              props.navigation.navigate('OcuparVaga', { Usuario: usuario, Token: token, Carros: carros })
             }}
           >
             <ImageBackground source={estaciona} style={styles.user} />
@@ -83,7 +85,7 @@ export default function EditInfo(props) {
           <TouchableOpacity
             style={styles.botao}
             onPress={() => {
-              props.navigation.navigate('UpdateUser', { Usuario: usuario, Token: token, Email: email, Nome: nome, Telefone: telefone, Senha: senha })
+              props.navigation.navigate('UpdateUser', { Usuario: usuario, Token: token, Email: email, Nome: nome, Telefone: telefone, Senha: senha, Carros: carros })
             }}
           >
             <Text style={styles.botaoText}>

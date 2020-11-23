@@ -16,11 +16,8 @@ const fetchFonts = () => {
   })
 }
 
-
-
 export default function DesocuparVaga(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [modal, setModal] = useState(false)
 
   const carro = props.route.params.Carro
   const usuario = props.route.params.Usuario
@@ -30,6 +27,13 @@ export default function DesocuparVaga(props) {
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
+  if (vaga.horaSaida != null)
+    props.navigation.navigate('AguardaPagamento', {
+      Usuario: usuario,
+      Token: token,
+      Vaga: vaga,
+      Carro: carro
+    })
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>
@@ -43,31 +47,11 @@ export default function DesocuparVaga(props) {
             <ImageBackground source={user} style={styles.user} />
           </TouchableOpacity>
         </View>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modal}
-          onRequestClose={() => {
-            //props.navigation.navigate("")
-          }}
-        >
-          <TouchableOpacity
-            style={styles.modalContainer}
-            activeOpacity={1}
-            onPressOut={() => { setModal(false) }}
-          >
-            <TouchableWithoutFeedback>
-              <View style={styles.modal}>
-                <Text></Text>
-              </View>
-            </TouchableWithoutFeedback>
-          </TouchableOpacity>
-        </Modal>
         <View style={styles.vaga}>
           <ImageBackground source={vagaBg} style={styles.bg}>
-              <ImageBackground source={carrobg} style={styles.bgCar}>
-                <Text style={styles.placa}>{carro.placa}</Text>
-              </ImageBackground>
+            <ImageBackground source={carrobg} style={styles.bgCar}>
+              <Text style={styles.placa}>{carro.placa}</Text>
+            </ImageBackground>
           </ImageBackground>
         </View>
         <TouchableOpacity
@@ -246,7 +230,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: 260,
-    width: 260,
-    marginTop: 150,
+    width: 260
   },
 })

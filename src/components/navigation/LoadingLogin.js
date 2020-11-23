@@ -9,8 +9,9 @@ const LoadingLogin = (props) => {
   const nome = props.route.params.Nome
   const senha = props.route.params.Senha
   const telefone = props.route.params.Telefone
-
-  if (props.route.params.login) {
+  const login = props.route.params.login
+  
+  if (login) {
     useEffect(() => {
       fetch('http://192.168.15.11:8080/auth', {
         method: 'POST',
@@ -31,7 +32,7 @@ const LoadingLogin = (props) => {
             Alert.alert("Email e/ou senha incorreto(s)");
             props.navigation.goBack()
           } else {
-            props.navigation.navigate('OcuparVaga', { Email: email, Token: json.dados.token })
+            props.navigation.navigate('CheckUserStatus', { Email: email, Token: json.dados.token })
           }
         })
         .catch((error) => {

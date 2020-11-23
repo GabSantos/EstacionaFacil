@@ -11,6 +11,7 @@ const UpdateUser = (props) => {
   const email = props.route.params.Email
   const telefone = props.route.params.Telefone
   const senha = props.route.params.Senha
+  const carros = props.route.params.Carros
 
   useEffect(() => {
     fetch('http://192.168.15.11:8080/api/usuario/cliente', {
@@ -38,7 +39,7 @@ const UpdateUser = (props) => {
           props.navigation.goBack()
         } else {
           Alert.alert('Alteração realizada com sucesso');
-          props.navigation.navigate('InfoCliente', { Usuario: json.dados, Token: token})
+          props.navigation.navigate('InfoCliente', { Usuario: json.dados, Token: token, Carros: carros })
         }
       })
       .catch((error) => {

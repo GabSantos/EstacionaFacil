@@ -25,32 +25,6 @@ export default function Vagas(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vagas, setVagas] = useState([])
 
-  const dados = props.route.params.Dados
-  const token = props.route.params.Token
-
-  useEffect(() => {
-    fetch('http://192.168.15.11:8080/api/vaga/todas', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        setVagas(json.dados)
-      }
-      )
-      .catch((error) => {
-        console.error(error)
-      })
-  }, []);
-
-
-
   if (!dataLoaded) {
     return (
       <AppLoading

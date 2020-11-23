@@ -18,7 +18,6 @@ const fetchFonts = () => {
 
 export default function AguardaPagamento(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [valor, setValor] = useState('')
 
   const carro = props.route.params.Carro
   const usuario = props.route.params.Usuario
@@ -28,9 +27,7 @@ export default function AguardaPagamento(props) {
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
-  if (vaga.paga == 'true') {
-    props.navigation.navigate('OcuparVaga', { Email: usuario.email, Token: token })
-  }
+  
 
   return (
     <View style={styles.container}>
@@ -47,14 +44,14 @@ export default function AguardaPagamento(props) {
         </View>
 
         <View style={styles.vaga}>
-          <Text>{'R$' + valor}</Text>
-          <Text>Dirija-se ao caixa para realizar o pagamento</Text>
+          <Text style={styles.valor}>{'R$' + vaga.valor}</Text>
+          <Text style={styles.text}>Dirija-se ao caixa para realizar o pagamento</Text>
         </View>
 
         <TouchableOpacity
           style={styles.botao}
           onPress={() => {
-            props.navigation.navigate('AguardaPagamento', {
+            props.navigation.navigate('CheckPagamento', {
               Usuario: usuario,
               Token: token,
               Vaga: vaga,
@@ -86,12 +83,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   vaga: {
+    backgroundColor: 'linear-gradient(90deg, rgba(255, 514, 0, 1) 100%, rgba(250,255,0,1) 100%)',
     marginTop: 60,
     height: 360,
     width: 270,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: 40
   },
   estaciona: {
     fontFamily: 'Stardos',
@@ -230,4 +229,16 @@ const styles = StyleSheet.create({
     width: 260,
     marginTop: 150,
   },
+  valor: {
+    color: '#0085FF',
+    fontSize: 35,
+    alignItems: 'center',
+    margin: 20
+  },
+  text: {
+    color: '#0085FF',
+    fontSize: 35,
+    textAlign: 'center',
+    margin: 20
+  }
 })

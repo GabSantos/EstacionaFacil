@@ -25,32 +25,6 @@ export default function MainFuncionario(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [funcionarios, setFuncionarios] = useState([])
 
-  const usuario = props.route.params.Usuario
-  const token = props.route.params.Token
-
-  useEffect(() => {
-    fetch('http://192.168.15.11:8080/api/usuario/funcionario/todos', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        setFuncionarios(json.dados)
-      }
-      )
-      .catch((error) => {
-        console.error(error)
-      })
-  }, []);
-
-
-
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 

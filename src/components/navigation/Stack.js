@@ -8,9 +8,12 @@ import UpdateFuncionario from './UpdateFuncionario'
 import UpdateVaga from './UpdateVaga'
 import EstacionaVaga from './EstacionaVaga'
 import GeraValor from './GeraValor'
+import CheckUserStatus from './CheckUserStatus'
 
-import GetUsuario from '../GetUsuario'
-import GetCarros from '../GetCarros'
+import CheckVagaOcupada from '../CheckVagaOcupada'
+import CarregaCarros from '../CarregaCarros'
+import CarregaVaga from '../CarregaVaga'
+import CheckPagamento from '../CheckPagamento'
 
 import Login from '../../pages/Login'
 import Cadastro from '../../pages/Cadastro'
@@ -46,17 +49,23 @@ export default function StackFunc(props) {
         component={Cadastro} />
       <Stack.Screen name="LoadingLogin"
         component={LoadingLogin} />
-      <Stack.Screen name="GetUsuario"
-        component={GetUsuario} />
-      <Stack.Screen name="GetCarros"
-        component={GetCarros} />
+      <Stack.Screen name="CheckUserStatus"
+        component={CheckUserStatus} />
+      <Stack.Screen name="CheckVagaOcupada"
+        component={CheckVagaOcupada} />
+      <Stack.Screen name="CarregaCarros"
+        component={CarregaCarros} />
 
       <Stack.Screen name="GeraValor"
         component={GeraValor} />
+        <Stack.Screen name="CheckPagamento"
+        component={CheckPagamento} />
       <Stack.Screen name="OcuparVaga"
         component={OcuparVaga} />
       <Stack.Screen name="DesocuparVaga"
         component={DesocuparVaga} />
+      <Stack.Screen name="CarregaVaga"
+        component={CarregaVaga} />
       <Stack.Screen name="EstacionaVaga"
         component={EstacionaVaga} />
       <Stack.Screen name="Vagas"

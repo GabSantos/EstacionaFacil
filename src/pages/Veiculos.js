@@ -17,10 +17,11 @@ const fetchFonts = () => {
 
 export default function InfoCliente(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
-  const [carros, setCarros] = useState([])
+  const [temFim, setTemFim] = useState(false)
 
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token
+  const carros = props.route.params.Carros
 
   const fim = {
     "id": "fim",
@@ -31,40 +32,25 @@ export default function InfoCliente(props) {
     "usuarioId": "adm"
   }
 
-  useEffect(() => {
-    fetch('http://192.168.15.11:8080/api/veiculo/cliente/' + usuario.id, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      },
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        setCarros(json.dados)
-      }
-      )
-      .catch((error) => {
-        console.error(error)
-      })
-  }, []);
-
 
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
 
-  carros.push(fim)
+  carros.forEach(element => {
+    if (element.id == 'fim') {
+      setTemFim(true)
+    }
+  })
+  if(!temFim)
+    carros.push(fim)
   const renderItem = ({ item }) => {
     if (item.id === 'fim') {
       return (
         <View>
           <TouchableOpacity
             onPress={() => {
-                props.navigation.navigate('CadastroVeiculo', { Usuario: usuario, Token: token })
-              }}
+              props.navigation.navigate('CadastroVeiculo', { Usuario: usuario, Token: token, Carros: carros })
+            }}
           >
             <ImageBackground source={ion_car} style={styles.bgCar} />
           </TouchableOpacity>
@@ -83,8 +69,8 @@ export default function InfoCliente(props) {
         <View>
           <TouchableOpacity
             onPress={() => {
-                props.navigation.navigate('EditVeiculo', { Carro: objCarro, Usuario: usuario, Token: token })
-              }}
+              props.navigation.navigate('EditVeiculo', { Carro: objCarro, Usuario: usuario, Token: token, Carros: carros })
+            }}
           >
             <ImageBackground source={carro} style={styles.bgCar}>
               <Text style={styles.placa}>{item.placa}</Text>
@@ -102,8 +88,8 @@ export default function InfoCliente(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-                props.navigation.navigate('OcuparVaga', { Email: usuario.email, Token: token })
-              }}
+              props.navigation.navigate('OcuparVaga', { Usuario: usuario, Token: token, Carros: carros })
+            }}
           >
             <ImageBackground source={estaciona} style={styles.user} />
           </TouchableOpacity>
@@ -115,7 +101,7 @@ export default function InfoCliente(props) {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={dados}
+            data={carros}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             style={styles.flatList}

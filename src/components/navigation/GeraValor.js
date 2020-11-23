@@ -5,8 +5,6 @@ import { Text, Alert } from 'react-native'
 
 const LoadingLogin = (props) => {
 
-  const [valor, setValor] = useState('')
-
   const carro = props.route.params.Carro
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Text, Alert } from 'react-native'
 
 
-
+ 
 const UpdateFuncionario = (props) => {
 
   const usuario = props.route.params.Usuario

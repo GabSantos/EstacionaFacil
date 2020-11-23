@@ -25,52 +25,6 @@ export default function MainFuncionario(props) {
   const [vagasOcupadas, setVagasOcupadas] = useState([])
   const [vagas, setVagas] = useState([])
   const [objVaga, setObjVaga] = useState({})
-  const usuario = props.route.params.Dados
-  const token = props.route.params.Token
-
-  useEffect(() => {
-    fetch('http://192.168.15.11:8080/api/vagaOcupada/VagasOcupadasNaoPagas', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        setVagasOcupadas(json.dados)
-      }
-      )
-      .catch((error) => {
-        console.error(error)
-      })
-  }, []);
-
-  useEffect(() => {
-    fetch('http://192.168.15.11:8080/api/vaga/todas', {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-      }
-    })
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        setVagas(json.dados)
-      }
-      )
-      .catch((error) => {
-        console.error(error)
-      })
-  }, []);
-
-
 
   if (!dataLoaded) {
     return (
@@ -80,19 +34,6 @@ export default function MainFuncionario(props) {
       />
     )
   }
-
-  const run = map =>{
-    var data = new Date(map),
-        dia  = data.getDate().toString(),
-        diaF = (dia.length == 1) ? '0'+dia : dia,
-        mes  = (data.getMonth()+1).toString(), //+1 pois no getMonth Janeiro começa com zero.
-        mesF = (mes.length == 1) ? '0'+mes : mes,
-        anoF = data.getFullYear(),
-        hora = (data.getHours()-3).toString(),
-        minuto = data.getMinutes().toString();
-    return (hora + "").padStart(2,"0") + ":" + (minuto + "").padStart(2,"0");
-}
-
 
   let cont = 1
   const renderItem = ({ item }) => {

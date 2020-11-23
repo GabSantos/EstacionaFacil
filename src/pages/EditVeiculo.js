@@ -15,15 +15,17 @@ const fetchFonts = () => {
 }
 
 export default function EditVeiculo(props) {
-  const carro = props.route.params.Carro
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token
+  const carros = props.route.params.Carros
+  const carro = props.route.params.Carro
 
   const [dataLoaded, setDataLoaded] = useState(false)
   const [marca, setMarca] = useState(carro.marca)
   const [cor, setCor] = useState(carro.cor)
   const [placa, setPlaca] = useState(carro.placa)
   const [tipo, setTipo] = useState(carro.tipo)
+
 
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
@@ -35,7 +37,7 @@ export default function EditVeiculo(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.goBack()
+              props.navigation.navigate('OcuparVaga', { Usuario: usuario, Token: token, Carros: carros })
             }}
           >
             <ImageBackground source={estaciona} style={styles.user} />
@@ -87,7 +89,7 @@ export default function EditVeiculo(props) {
               props.navigation.navigate('UpdateCarro', {
                 Usuario: usuario,
                 Token: token,
-                CarroId: carro.id,
+                Carro: carro,
                 Marca: marca,
                 Cor: cor,
                 Placa: placa,

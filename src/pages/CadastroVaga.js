@@ -21,9 +21,6 @@ export default function Cadastro(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
   const [vaga, setVaga] = useState('')
 
-  const dados = props.route.params.Dados
-  const token = props.route.params.Token
-
   if (!dataLoaded) {
     return (
       <AppLoading

@@ -17,9 +17,6 @@ const fetchFonts = () => {
 }
 
 export default function Cadastro(props) {
-  const usuario = props.route.params.Usuario
-  const token = props.route.params.Token
-  const funcionario = props.route.params.Funcionario
 
   const [dataLoaded, setDataLoaded] = useState(false)
   const [nome, setNome] = useState(funcionario.nome)

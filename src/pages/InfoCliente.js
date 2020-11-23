@@ -18,7 +18,7 @@ export default function InfoCliente(props) {
 
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token
-
+  const carros = props.route.params.Carros
 
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />
@@ -31,7 +31,7 @@ export default function InfoCliente(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate('OcuparVaga', { Email: usuario.email, Token: token })
+              props.navigation.navigate('CarregaCarros', { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={estaciona} style={styles.user} />
@@ -44,7 +44,7 @@ export default function InfoCliente(props) {
           <TouchableOpacity
             style={styles.botao}
             onPress={() => {
-              props.navigation.navigate("Veiculos", { Usuario: usuario, Token: token })
+              props.navigation.navigate("Veiculos", { Usuario: usuario, Token: token, Carros: carros })
             }}
           >
             <Text style={styles.botaoText}>
@@ -54,7 +54,7 @@ export default function InfoCliente(props) {
           <TouchableOpacity
             style={styles.botao}
             onPress={() => {
-              props.navigation.navigate("EditInfo", { Usuario: usuario, Token: token })
+              props.navigation.navigate("EditInfo", { Usuario: usuario, Token: token, Carros: carros })
             }}
           >
             <Text style={styles.botaoText}>
