@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Alert } from 'react-native'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 const CheckVagaOcupada = (props) => {
@@ -34,7 +35,8 @@ const CheckVagaOcupada = (props) => {
                   Usuario: usuario,
                   Token: token,
                   Vaga: vaga,
-                  Carro: carro
+                  Carro: carro,
+                  Carros: carros
                 })
               }
             })

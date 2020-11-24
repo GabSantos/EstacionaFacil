@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, ImageBackground, Modal, FlatList } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import user from '../../assets/icons/user.png'
 

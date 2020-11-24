@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Text, SafeAreaView, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, ImageBackground, Modal, FlatList } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import user from '../../assets/icons/user.png'
 
@@ -46,6 +48,7 @@ export default function OcuparVaga(props) {
               Carro: objCarro,
               Usuario: usuario,
               Token: token,
+              Carros: carros,
               CodVaga: vaga
             })
           }}
@@ -57,13 +60,8 @@ export default function OcuparVaga(props) {
       </View>
 
     )
-
-
-
   }
 
-
-  console.log(usuario, carros)
   return (
     <View style={styles.container}>
       <ImageBackground source={background} style={styles.bg}>

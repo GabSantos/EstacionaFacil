@@ -1,8 +1,9 @@
-
 import React, { useState, useEffect } from 'react'
 import { Text, SafeAreaView, View, FlatList, TouchableOpacity, StyleSheet, ImageBackground, Modal } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import background from '../../assets/fundotelainicial.png'
 
@@ -149,8 +150,17 @@ export default function MainFuncionario(props) {
             keyExtractor={(item) => item.id}
             style={styles.flatList}
           />
-
         </SafeAreaView>
+        <TouchableOpacity
+          style={styles.botao}
+          onPress={() => {
+            props.navigation.navigate('CarregaVagas', { Usuario: usuario, Token: token })
+          }}
+        >
+          <Text style={styles.botaoText}>
+            Atualizar
+            </Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );

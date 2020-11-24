@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import background from '../../assets/fundotelainicial.png'
 import vagaBg from '../../assets/vaga.png'

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Text, Alert } from 'react-native'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 const LoadingLogin = (props) => {
@@ -65,7 +66,7 @@ const LoadingLogin = (props) => {
             props.navigation.goBack()
           } else {
             Alert.alert('Cadastro realizado com sucesso');
-            props.navigation.navigate('Login')
+            props.navigation.navigate('Inicial')
           }
         })
         .catch((error) => {

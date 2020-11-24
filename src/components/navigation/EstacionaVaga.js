@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Alert } from 'react-native'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 const EstacionaVaga = (props) => {
 
   const carro = props.route.params.Carro
+  const carros = props.route.params.Carros
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token
   const vaga = props.route.params.Vaga
@@ -28,17 +30,18 @@ const EstacionaVaga = (props) => {
       return response.json()
     })
     .then((json) => {
-      if (json.dados === null) {
-        json.erros.forEach(erro => {
-          Alert.alert(erro)
-        })
+      console.log(json.dados)
+      if (json.dados == null) {
+        Alert.alert('Essa vaga não existe')
+
         props.navigation.goBack()
       } else {
         props.navigation.navigate('DesocuparVaga', {
           Usuario: usuario,
           Token: token,
           Vaga: json.dados,
-          Carro: carro
+          Carro: carro,
+          Carros: carros
         })
       }
     })

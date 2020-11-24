@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Alert } from 'react-native'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
  
 const UpdateFuncionario = (props) => {
@@ -31,6 +32,10 @@ const UpdateFuncionario = (props) => {
         }),
       })
         .then((response) => {
+          if(response.status == 403){
+            Alert.alert('Você não tem permissão para realizar essa ação')
+            props.navigation.navigate('MainFuncionario', { Usuario: usuario, Token: token })
+          }
           return response.json()
         })
         .then((json) => {

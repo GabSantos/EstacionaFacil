@@ -1,5 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import LoadingLogin from './LoadingLogin'
 import UpdateUser from './UpdateUser'
@@ -18,6 +20,7 @@ import CarregaVagas from '../CarregaVagas'
 import CarregaVagasOcupadas from '../CarregaVagasOcupadas'
 import ConfirmaPagamento from '../ConfirmaPagamento'
 
+
 import Login from '../../pages/Login'
 import Cadastro from '../../pages/Cadastro'
 import Inicial from '../../pages/Inicial'
@@ -26,6 +29,7 @@ import OcuparVaga from '../../pages/OcuparVaga'
 import DesocuparVaga from '../../pages/DesocuparVaga'
 import InfoCliente from '../../pages/InfoCliente'
 import EditInfo from '../../pages/EditInfo'
+import EditVaga from '../../pages/EditVaga'
 import MainFuncionario from '../../pages/MainFuncionario'
 import Veiculos from '../../pages/Veiculos'
 import EditVeiculo from '../../pages/EditVeiculo'
@@ -73,6 +77,8 @@ export default function StackFunc(props) {
         component={CarregaVaga} />
       <Stack.Screen name="EstacionaVaga"
         component={EstacionaVaga} />
+      <Stack.Screen name="EditVaga"
+        component={EditVaga} />
       <Stack.Screen name="Vagas"
         component={Vagas} />
       <Stack.Screen name="CadastroVaga"

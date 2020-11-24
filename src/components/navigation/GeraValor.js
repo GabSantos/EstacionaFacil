@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Text, Alert } from 'react-native'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 const LoadingLogin = (props) => {

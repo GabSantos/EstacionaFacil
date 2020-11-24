@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Alert } from 'react-native'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 const CarregaCarros = (props) => {
@@ -9,7 +10,8 @@ const CarregaCarros = (props) => {
   const token = props.route.params.Token
   const carro = props.route.params.Carro
   const codVaga = props.route.params.CodVaga
-  
+  const carros = props.route.params.Carros
+
 
   const url = 'http://192.168.15.11:8080/api/vaga/todas'
 
@@ -32,6 +34,7 @@ const CarregaCarros = (props) => {
             Usuario: usuario,
             Token: token,
             Carro: carro,
+            Carros: carros,
             Vaga: vaga.id
           })
         }

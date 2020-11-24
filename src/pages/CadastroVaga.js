@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import background from '../../assets/fundotelainicial.png'
 import vagaBg from '../../assets/vaga.png'
 import voltar from '../../assets/icons/voltar.png'
 import estaciona from '../../assets/icons/estaciona.png'
 import users from '../../assets/icons/users.png'
-import carro from '../../assets/icons/carro.png'
+import user from '../../assets/icons/user.png'
 
 const fetchFonts = () => {
   return loadAsync({
@@ -70,7 +72,7 @@ export default function Cadastro(props) {
               props.navigation.navigate("CadastroFuncionario", { Usuario: usuario, Token: token }) // Cadastrar nova vaga
             }}
           >
-            <ImageBackground source={carro} style={styles.icon} />
+            <ImageBackground source={user} style={styles.icon} />
           </TouchableOpacity>
         </View>
         

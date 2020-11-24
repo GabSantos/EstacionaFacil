@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import background from '../../assets/fundotelainicial.png'
 import voltar from '../../assets/icons/voltar.png'
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
     width: 244,
     marginLeft: 18,
     fontSize: 20,
-    fontFamily: "Modak"
+    color: '#FBFBFB',
   },
   botao: {
     backgroundColor: 'linear-gradient(90deg, rgba(255, 514, 0, 1) 100%, rgba(250,255,0,1) 100%)',

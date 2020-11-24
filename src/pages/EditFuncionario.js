@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import background from '../../assets/fundotelainicial.png'
 import voltar from '../../assets/icons/voltar.png'
@@ -17,15 +19,15 @@ const fetchFonts = () => {
 }
 
 export default function Cadastro(props) {
+    const usuario = props.route.params.Usuario
+    const token = props.route.params.Token
+    const funcionario = props.route.params.Funcionario
 
   const [dataLoaded, setDataLoaded] = useState(false)
   const [nome, setNome] = useState(funcionario.nome)
   const [email, setEmail] = useState(funcionario.email)
   const [telefone, setTelefone] = useState(funcionario.telefone)
   const [senha, setSenha] = useState('')
-
-  const usuario = props.route.params.Usuario
-  const token = props.route.params.Token
 
   if (!dataLoaded)
     <AppLoading startAsync={fetchFonts} onFinish={() => setDataLoaded(true)} />

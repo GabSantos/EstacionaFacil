@@ -3,7 +3,8 @@ import { Text, View, StyleSheet, ImageBackground, TouchableOpacity } from 'react
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
 import background from '../../assets/fundotelainicial.png'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 // Função carrega fontes externas
 const fetchFonts = () => {

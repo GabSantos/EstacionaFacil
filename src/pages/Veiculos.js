@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Text, FlatList, View, SafeAreaView, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import background from '../../assets/fundoinfocliente.png'
 import estaciona from '../../assets/icons/estaciona.png'
@@ -29,7 +31,7 @@ export default function InfoCliente(props) {
     "id": "fim",
     "marca": "s",
     "cor": "s",
-    "placa": "Add Carro",
+    "placa": "",
     "tipo": "a",
     "usuarioId": "adm"
   }
@@ -90,7 +92,7 @@ export default function InfoCliente(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate('OcuparVaga', { Usuario: usuario, Token: token, Carros: carros })
+              props.navigation.navigate('CarregaCarros', { Usuario: usuario, Token: token })
             }}
           >
             <ImageBackground source={estaciona} style={styles.user} />

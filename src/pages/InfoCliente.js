@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import background from '../../assets/fundoinfocliente.png'
 import estaciona from '../../assets/icons/estaciona.png'

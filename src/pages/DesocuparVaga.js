@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { Text, Alert, View, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, ImageBackground, Modal, FlatList } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import user from '../../assets/icons/user.png'
 
@@ -20,6 +22,7 @@ export default function DesocuparVaga(props) {
   const [dataLoaded, setDataLoaded] = useState(false)
 
   const carro = props.route.params.Carro
+  const carros = props.route.params.Carros
   const usuario = props.route.params.Usuario
   const token = props.route.params.Token
   const vaga = props.route.params.Vaga
@@ -41,7 +44,7 @@ export default function DesocuparVaga(props) {
           <TouchableOpacity
             style={styles.botoesHeader}
             onPress={() => {
-              props.navigation.navigate('InfoCliente', { Usuario: usuario, Token: token })
+              props.navigation.navigate('InfoCliente', { Usuario: usuario, Token: token, Carros: carros })
             }}
           >
             <ImageBackground source={user} style={styles.user} />

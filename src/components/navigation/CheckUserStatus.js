@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Alert } from 'react-native'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 
 const CheckUserStatus = (props) => {

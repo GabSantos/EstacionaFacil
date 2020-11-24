@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Text, FlatList, View, SafeAreaView, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native'
+import { Text, FlatList, View, SafeAreaView, TouchableOpacity, StyleSheet, ImageBackground, Alert } from 'react-native'
 import { loadAsync } from 'expo-font'
 import { AppLoading } from 'expo'
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 import background from '../../assets/fundotelainicial.png'
 
@@ -39,6 +41,10 @@ export default function MainFuncionario(props) {
     }
   })
     .then((response) => {
+      if(response.status == 403){
+        Alert.alert('Você não tem permissão para realizar essa ação')
+        props.navigation.navigate('MainFuncionario', { Usuario: usuario, Token: token })
+      }
       return response.json()
     })
     .then((json) => {
